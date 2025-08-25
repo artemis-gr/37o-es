@@ -1,0 +1,69 @@
+/* Mobile-first: centered cluster stays as-is */
+.site-footer { 
+  padding: 1.5rem 1rem; 
+}
+
+.footer-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: 20px;
+  position: relative; /* needed for absolute centering the logo on desktop */
+}
+
+/* Mobile order */
+.footer-link--contact { order: -1; }
+.footer-logo          { order:  0; }
+.footer-link--projects{ order:  1; }
+
+/* Footer elements (unchanged) */
+.footer-link {
+  text-decoration: none;
+  color: var(--footer-link);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+.footer-link:hover,
+.footer-link:focus { color: var(--footer-link-hover); }
+
+.footer-logo img {
+  display: block;
+  width: 80px;
+  height: auto;
+}
+
+/* Desktop: links hard-left, logo perfectly centered */
+@media (min-width: 900px) {
+  .site-footer { padding: 3rem 2rem; }
+
+  .footer-inner {
+    align-items: flex-end;
+    justify-content: flex-start;
+    gap: 8rem;
+    min-height: 72px;                /* give the absolute logo breathing room */
+  }
+
+  /* Reset orders for clarity (not strictly required) */
+  .footer-link--contact,
+  .footer-link--projects,
+  .footer-logo { order: 0; }
+
+  /* Left links */
+  .footer-link--contact { margin-right: 16px; }
+  .footer-link--projects { margin-right: 0; }
+
+  /* Centered logo — not part of the flow */
+  .footer-logo {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: inline-block;           /* shrink-wrap anchor around image */
+  }
+
+  .footer-logo img {
+    width: 100px;                    /* fixed desktop size */
+    height: auto;
+    max-width: 100%;
+  }
+}

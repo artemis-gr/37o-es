@@ -1,0 +1,50 @@
+/* assets/css/app.css */
+
+/* 1) Base / Reset (minimal) */
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* The main area expands to fill available space */
+#site-content {
+  flex: 1 0 auto;
+}
+
+/* Footer stays at the end of the column */
+.site-footer {
+  flex: 0 0 auto;
+}
+
+/* 2) Design tokens (globals) */
+:root{
+  --footer-bg: transparent;
+  --footer-fg: #0a0a0a;        /* default footer text */
+  --footer-link: #000;      /* default footer link color */
+  --footer-link-hover: #545454;
+}
+
+/* Front page variant: add .is-front on the footer in PHP */
+.is-front {
+  --footer-fg: #ffffff;
+  --footer-link: #000;
+  --footer-link-hover: #545454;
+}
+
+/* 3) Global utilities (keep here as needed) */
+.visually-hidden {
+  position: absolute !important;
+  height: 1px; width: 1px;
+  overflow: hidden; clip: rect(1px,1px,1px,1px);
+  white-space: nowrap; border: 0; padding: 0; margin: -1px;
+}
+
+/* (No component/page styles here—those live in separate files) */
+
