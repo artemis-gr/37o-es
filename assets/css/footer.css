@@ -21,6 +21,7 @@
   text-decoration: none;
   color: var(--footer-link);
   font-size: 14px;
+  font-weight: bold;
   letter-spacing: 0.02em;
   line-height: 1;
 }
@@ -45,6 +46,15 @@
     justify-content: flex-start;
     gap: 8rem;
     min-height: 72px;                /* give the absolute logo breathing room */
+  }
+
+  .footer-link {
+    text-decoration: none;
+    color: var(--footer-link);
+    font-size: 15px;
+    font-weight: bold;
+    letter-spacing: 0.02em;
+    line-height: 1;
   }
 
   /* Reset orders for clarity (not strictly required) */

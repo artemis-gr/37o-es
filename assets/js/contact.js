@@ -13,7 +13,7 @@
 
     // Tail tuning: go wild 😎
     const LONG_TAIL     = 90;  // active side
-    const SHORT_TAIL    = 800;  // opposite side
+    const SHORT_TAIL    = 1050;  // opposite side
     const DESKTOP_BOOST = 0;  // extra on desktop
 
     function rects() {

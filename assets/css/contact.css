@@ -252,6 +252,10 @@ body.page-template-page-contact .contact-page {
     margin-top: .25rem;
   }
 
+  .architect-phone, .architect-cv {
+    margin-top: 1.5rem;
+  }
+
   .studio-locations { 
     font-size: 0.85rem; 
     padding-top: 1rem;
