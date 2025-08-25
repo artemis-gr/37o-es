@@ -1,0 +1,18 @@
+/* front-page hero fills the viewport */
+.front-hero {
+  min-height: 100svh;            /* better on mobile than 100vh */
+  background-image: var(--front-bg);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+/* make the footer fixed ONLY on the front page */
+.site-footer.is-front {
+  position: fixed;
+  left: 0; right: 0; bottom: 0;
+  z-index: 100;
+}
+
+/* optional: prevent any stray scroll on the home/front page */
+body.home { overflow: hidden; }

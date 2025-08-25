@@ -1,6 +1,6 @@
 <?php get_header(); ?>
-<main id="site-content">
-  <h1>37o.es theme scaffold</h1>
-  <p>Replace this with templates.</p>
+<main>
+  <h1>Hello 37o.es</h1>
+  <p>If you see this, the theme is working 🎉</p>
 </main>
 <?php get_footer(); ?>

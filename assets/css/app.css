@@ -7,15 +7,20 @@
 
 html, body { height: 100%; }
 
+main {
+  margin: 0;
+  padding: 0;
+}
+
 body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  margin: 0;
 }
 
-/* The main area expands to fill available space */
-#site-content {
-  flex: 1 0 auto;
+#site-content {        
+  flex: 1 0 auto;      /* fill leftover space between header (none) and footer */
 }
 
 /* Footer stays at the end of the column */
@@ -29,12 +34,13 @@ body {
   --footer-fg: #0a0a0a;        /* default footer text */
   --footer-link: #000;      /* default footer link color */
   --footer-link-hover: #545454;
+  --teal: #2081a5;
 }
 
 /* Front page variant: add .is-front on the footer in PHP */
 .is-front {
   --footer-fg: #ffffff;
-  --footer-link: #000;
+  --footer-link: #ffffff;
   --footer-link-hover: #545454;
 }
 
