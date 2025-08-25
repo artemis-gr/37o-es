@@ -1,0 +1,16 @@
+# WordPress ignores
+*.log
+wp-config.php
+*.sql
+*.sqlite
+
+# Node/build stuff
+node_modules/
+vendor/
+dist/
+.DS_Store
+.idea/
+.vscode/
+
+# OS/system
+Thumbs.db
