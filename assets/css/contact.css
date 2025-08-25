@@ -21,7 +21,7 @@ body.page-template-page-contact .contact-page {
 .contact-layout {
   position: relative;       /* needed for full-row overlay positioning */
   display: grid;
-  gap: 2rem;
+  gap: 1rem 0rem;
   align-items: start;
   justify-items: center;
 
@@ -105,25 +105,50 @@ body.page-template-page-contact .contact-page {
   object-fit: cover;
   position: relative;
   z-index: 1;
+  margin-left: 1.1rem;
 }
 
 /* ===== Studio details ===== */
 .studio-details { grid-area: details; text-align: center; }
-.studio-heading   { margin: .25rem 0 0; font-size: 1rem; font-weight: 600; }
-.studio-locations { margin: .25rem 0 0; opacity: .8; }
+.studio-heading   { 
+    margin: .25rem 0 0; 
+    font-size: 1.2rem; 
+    font-weight: 600; 
+    font-style: italic;
+    color: var(--teal);
+    letter-spacing: 0.3rem;
+}
+.studio-locations { 
+    font-size: 0.75rem; 
+    margin: .25rem 0 0; 
+    opacity: .8; 
+    color: var(--teal);
+    padding-top: 0.25rem;
+    font-style: italic;
+}
 
 /* ===== Architect cards ===== */
-.architect-card[data-architect="left"]  { grid-area: left;  text-align: center; }
-.architect-card[data-architect="right"] { grid-area: right; text-align: center; }
+.architect-card[data-architect="left"]  { 
+    grid-area: left;  
+    text-align: left; 
+    margin-top: 2.5rem;
+}
+.architect-card[data-architect="right"] { 
+    grid-area: right; 
+    text-align: right; 
+    margin-top: 2.5rem;
+}
 
 .architect-name {
   background: none;
   border: 0;
   padding: 0;
-  font: inherit;
+  font-size: 0.82rem;
+  line-height: 0.82rem;
   text-decoration: none;
   position: relative;
   cursor: pointer;
+  color: #000
 }
 
 .architect-role,
@@ -131,6 +156,8 @@ body.page-template-page-contact .contact-page {
 .architect-email,
 .architect-cv {
   display: block;
+  font-size: 0.80rem;
+  line-height: 0.80rem;
   margin-top: .25rem;
   text-decoration: none;
   color: inherit;
@@ -159,32 +186,84 @@ body.page-template-page-contact .contact-page {
 /* ===== Desktop adjustments ===== */
 @media (min-width: 900px) {
   body.page-template-page-contact .contact-page {
-    padding-bottom: var(--footer-h-desktop); /* desktop token here */
+    padding-bottom: var(--footer-h-desktop);
   }
 
   .contact-layout {
-    grid-template-columns: minmax(280px, 1fr) auto minmax(280px, 1fr);
+    /* widen the whole grid on desktop */
+    width: min(1480px, 100%);
+    padding: 0 2rem;
+
+    /* make 3 distinct columns: left – map – right */
+    grid-template-columns: 1fr minmax(520px, 640px) 1fr;
     grid-template-areas:
       "left map right"
       "details details details";
     align-items: center;
-    gap: 5rem;
+
+    gap: 4.5rem; /* increase space between columns */
   }
 
+  .contact-map__img {
+        display: block;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
+        z-index: 1;
+        margin-left: 0;
+    }
+
+
   .architect-card[data-architect="left"]  { 
+    grid-area: left;
+    text-align: left;
+    justify-self: start;   /* anchor to far left */
     text-align: left; 
     margin-top: 2.5rem;
   }
   .architect-card[data-architect="right"] { 
+    grid-area: right;
+    text-align: right;
+    justify-self: end;     /* anchor to far right */
     text-align: right; 
     margin-top: 2.5rem;
   }
 
+  .architect-name {
+        background: none;
+        border: 0;
+        padding: 0;
+        font-size: 0.98rem;
+        line-height: 0.98rem;
+        text-decoration: none;
+        position: relative;
+        cursor: pointer;
+        color: #000
+    }
+
+  .architect-role,
+  .architect-phone,
+  .architect-email,
+  .architect-cv {
+    display: block;
+    font-size: 0.95rem;
+    line-height: 0.95rem;
+    margin-top: .25rem;
+  }
+
+  .studio-locations { 
+    font-size: 0.85rem; 
+    padding-top: 1rem;
+  }
+
   .contact-map { 
-    max-width: 600px; 
+    max-width: 640px; 
     justify-self: center;
   }
 
   .map-dot { --size: 6px; }
   .contact-line { stroke-width: 0.8; }
+
 }
+

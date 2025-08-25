@@ -1,6 +1,6 @@
 /* Mobile-first: centered cluster stays as-is */
 .site-footer { 
-  padding: 1.5rem 1rem; 
+  padding: 1rem 1rem; 
 }
 
 .footer-inner {
@@ -35,7 +35,10 @@
 
 /* Desktop: links hard-left, logo perfectly centered */
 @media (min-width: 900px) {
-  .site-footer { padding: 3rem 2rem; }
+  .site-footer { 
+    padding: 3rem 
+    2rem; 
+  }
 
   .footer-inner {
     align-items: flex-end;
