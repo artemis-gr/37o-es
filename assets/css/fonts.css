@@ -1,0 +1,39 @@
+/* Georgia Regular */
+@font-face {
+  font-family: 'GeorgiaCustom';
+  src: url('../fonts/Georgia/Georgia.woff2') format('woff2'),
+       url('../fonts/Georgia/Georgia.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Georgia Italic */
+@font-face {
+  font-family: 'GeorgiaCustom';
+  src: url('../fonts/Georgia/Georgia-Italic.woff2') format('woff2'),
+       url('../fonts/Georgia/Georgia-Italic.woff') format('woff');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Georgia Bold */
+@font-face {
+  font-family: 'GeorgiaCustom';
+  src: url('../fonts/Georgia/Georgia-Bold.woff2') format('woff2'),
+       url('../fonts/Georgia/Georgia-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Georgia Bold Italic */
+@font-face {
+  font-family: 'GeorgiaCustom';
+  src: url('../fonts/Georgia/Georgia-BoldItalic.woff2') format('woff2'),
+       url('../fonts/Georgia/Georgia-BoldItalic.woff') format('woff');
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}

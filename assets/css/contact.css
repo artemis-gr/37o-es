@@ -6,6 +6,7 @@ body.page-template-page-contact .site-footer {
   position: fixed;
   left: 0; right: 0; bottom: 0;
   z-index: 100;
+  background: white;
 }
 
 /* Contact page area fills viewport; center horizontally + keep space for footer */
@@ -24,8 +25,7 @@ body.page-template-page-contact .contact-page {
   gap: 1rem 0rem;
   align-items: start;
   justify-items: center;
-
-  width: min(1200px, 100%);
+  padding: 1rem 0.5rem;
   margin: 0 auto;
 
   /* Mobile: map full row, then details full row, then two columns for architects */
@@ -104,21 +104,20 @@ body.page-template-page-contact .contact-page {
   object-fit: cover;
   position: relative;
   z-index: 1;
-  margin-left: 1.1rem;
 }
 
 /* ===== Studio details ===== */
 .studio-details { grid-area: details; text-align: center; }
 .studio-heading   { 
-    margin: .25rem 0 0; 
-    font-size: 1.2rem; 
-    font-weight: 600; 
+    margin: .25rem 0 0;
+    font-size: 1rem;
+    font-weight: bold;
     font-style: italic;
     color: var(--teal);
-    letter-spacing: 0.3rem;
+    letter-spacing: 0.1rem;
 }
 .studio-locations { 
-    font-size: 0.75rem; 
+    font-size: 0.70rem;
     margin: .25rem 0 0; 
     opacity: .8; 
     color: var(--teal);
@@ -148,7 +147,7 @@ body.page-template-page-contact .contact-page {
   text-decoration: none;
   position: relative;
   cursor: pointer;
-  color: #000
+  color: #636363;
 }
 
 .architect-role,
@@ -160,7 +159,7 @@ body.page-template-page-contact .contact-page {
   line-height: 0.80rem;
   margin-top: .25rem;
   text-decoration: none;
-  color: inherit;
+  color: #636363;
 }
 
 .architect-role { opacity: .85; }
@@ -181,6 +180,7 @@ body.page-template-page-contact .contact-page {
   .contact-layout {
     width: min(1480px, 100%);
     padding: 0 2rem;
+    margin: 0 auto;
 
     grid-template-columns: 1fr minmax(520px, 640px) 1fr;
     grid-template-areas:
@@ -226,7 +226,6 @@ body.page-template-page-contact .contact-page {
         text-decoration: none;
         position: relative;
         cursor: pointer;
-        color: #000
     }
 
   .architect-role,
@@ -248,13 +247,65 @@ body.page-template-page-contact .contact-page {
     padding-top: 1rem;
   }
 
+  .studio-heading   { 
+    margin: .25rem 0 0; 
+    font-size: 1.2rem; 
+    font-weight: bold; 
+    font-style: italic;
+    color: var(--teal);
+    letter-spacing: 0.3rem;
+  }
+
+  .studio-locations { 
+    font-size: 0.75rem; 
+    margin: .25rem 0 0; 
+    opacity: .8; 
+    color: var(--teal);
+    padding-top: 0.25rem;
+    font-style: italic;
+    }
+
   .contact-map { 
     max-width: 640px; 
     justify-self: center;
   }
 
-  .map-dot { --size: 6px; }
+  .map-dot { --size: 7px; }
   .contact-line { stroke-width: 0.8; }
 
+}
+
+@media (max-width: 899px) {
+  .contact-overlay,
+  .contact-label {
+    display: none !important;
+  }
+  .map-dot { display: none; }
+}
+
+/* Compact mode for short screens */
+@media (max-height: 700px) and (max-width: 899px) {
+  body.page-template-page-contact .contact-page {
+    height: calc(100svh - var(--footer-h-mobile)); /* lock to viewport minus footer */
+    align-items: flex-start;
+    padding-top: 6vh;   /* a little cushion */
+    padding-bottom: 0;  /* footer already accounted for above */
+    overflow: hidden;   /* 👈 prevent scrollbars */
+  }
+
+  .contact-layout {
+    gap: 0.75rem 0;
+    padding: 0.75rem .5rem 1rem;
+  }
+
+  .contact-map {
+    max-width: min(88vw, 340px);
+    aspect-ratio: 16 / 9;
+  }
+
+  .architect-card[data-architect="left"],
+  .architect-card[data-architect="right"] {
+    margin-top: 1.5rem;
+  }
 }
 
