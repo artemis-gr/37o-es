@@ -22,12 +22,7 @@ add_action('wp_enqueue_scripts', function () {
 
   wp_enqueue_style('theme-core', get_stylesheet_uri(), [], THIRTYSEVEN_OES_VERSION);
 
-  wp_enqueue_style(
-    'theme-fonts',
-    $theme_uri . '/assets/css/fonts.css',
-    [],
-    $ver('/assets/css/fonts.css')
-  );
+  wp_enqueue_style('theme-fonts', $theme_uri.'/assets/css/fonts.css', [], $ver('/assets/css/fonts.css'));
 
   // App styles after
   wp_enqueue_style('theme-app', $theme_uri . '/assets/css/app.css', ['theme-fonts'], $ver('/assets/css/app.css'));

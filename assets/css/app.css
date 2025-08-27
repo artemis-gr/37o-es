@@ -34,17 +34,19 @@ body {
 /* 2) Design tokens (globals) */
 :root{
   --footer-bg: transparent;
-  --footer-fg: #0a0a0a;        /* default footer text */
-  --footer-link: #000;      /* default footer link color */
-  --footer-link-hover: #545454;
-  --teal: #2081a5;
+  --footer-fg: #0a0a0a;       
+  --footer-link: #000;      
+  --footer-h-mobile: 96px;
+  --footer-h-desktop: 120px;
+  --teal: #73a1b8;
+  --contact-grey: #65707c;
 }
 
 /* Front page variant: add .is-front on the footer in PHP */
 .is-front {
-  --footer-fg: #ffffff;
-  --footer-link: #ffffff;
-  --footer-link-hover: #545454;
+  --footer-fg: #c6dae5;
+  --footer-link: #c6dae5;
+  --footer-link-hover: #65707c;
 }
 
 /* 3) Global utilities (keep here as needed) */

@@ -1,14 +1,12 @@
-/* Mobile-first */
-.site-footer { 
-  padding: 0.8rem 0.5rem;
-}
-
 .footer-inner {
-  display: flex;
+  /* use inner padding so total height stays the token value */
+  height: 100%;
+  padding: 0.6rem 0.5rem;     /* your current mobile padding */
+  display: flex;              /* keep your existing layout */
   align-items: center;
   justify-content: space-around;
   gap: 20px;
-  position: relative; 
+  position: relative;
 }
 
 .footer-logo img {
@@ -45,19 +43,28 @@
 .footer-link:focus::after {
   opacity: 1;
   transform: scaleX(1);
+  color: var(--footer-link);
+}
+
+.footer-link.is-active::after {
+  opacity: 1;
+  transform: scaleX(1);
+}
+
+.site-footer {
+  /* lock the outer box to the tokens */
+  height: var(--footer-h-mobile);
+  padding: 0;                 /* padding moves to .footer-inner */
+  box-sizing: border-box;
 }
 
 /* Desktop */
 @media (min-width: 900px) {
-  .site-footer { 
-    padding: 3rem;           
-  }
-
-  .footer-inner {
-    align-items: flex-end;
-    justify-content: flex-start;
+  .site-footer { height: var(--footer-h-desktop); }
+  .footer-inner { 
+    padding: 3rem; 
     gap: 8rem;
-    min-height: 72px;               
+    justify-content: flex-start;
   }
 
   .footer-link {
