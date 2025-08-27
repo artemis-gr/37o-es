@@ -13,6 +13,7 @@ function t37o_field($key, $default = '') {
 }
 
 $map_img = t37o_field('map_image', get_stylesheet_directory_uri().'/assets/img/map-placeholder.png');
+$map_img_mobile = t37o_field('map_image_mobile', ''); 
 
 $dot1 = [
   'x' => t37o_field('dot1_x', '62'),
@@ -87,10 +88,22 @@ $studio_locations = t37o_field('studio_locations', 'Madrid | Athens | Málaga');
             data-dot2-y="<?php echo esc_attr($dot2['y']); ?>"
             data-dot2-label="<?php echo esc_attr($dot2['label']); ?>">
 
-        <img class="contact-map__img" src="<?php echo esc_url($map_img); ?>" alt="Studio map" decoding="async" />
+        <picture class="contact-map__picture">
+            <?php if ($map_img_mobile) : ?>
+                <source media="(max-width: 899px)" srcset="<?php echo esc_url($map_img_mobile); ?>" />
+            <?php endif; ?>
+            <img
+                class="contact-map__img"
+                src="<?php echo esc_url($map_img); ?>"
+                alt="Studio map"
+                decoding="async"
+            />
+        </picture>
+
         <span class="map-dot map-dot--1" style="--x:<?php echo esc_attr($dot1['x']); ?>%; --y:<?php echo esc_attr($dot1['y']); ?>%;"></span>
         <span class="map-dot map-dot--2" style="--x:<?php echo esc_attr($dot2['x']); ?>%; --y:<?php echo esc_attr($dot2['y']); ?>%;"></span>
     </div>
+
 
     <!-- Studio details -->
     <div class="studio-details">

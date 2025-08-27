@@ -20,10 +20,17 @@ add_action('wp_enqueue_scripts', function () {
     return file_exists($path) ? filemtime($path) : THIRTYSEVEN_OES_VERSION;
   };
 
-  // Keep style.css (for theme header and any tiny globals)
   wp_enqueue_style('theme-core', get_stylesheet_uri(), [], THIRTYSEVEN_OES_VERSION);
 
-  wp_enqueue_style('theme-app', $theme_uri . '/assets/css/app.css', [], $ver('/assets/css/app.css'));
+  wp_enqueue_style(
+    'theme-fonts',
+    $theme_uri . '/assets/css/fonts.css',
+    [],
+    $ver('/assets/css/fonts.css')
+  );
+
+  // App styles after
+  wp_enqueue_style('theme-app', $theme_uri . '/assets/css/app.css', ['theme-fonts'], $ver('/assets/css/app.css'));
   wp_enqueue_style('theme-footer', $theme_uri . '/assets/css/footer.css', ['theme-app'], $ver('/assets/css/footer.css'));
 
   // Optional main script
