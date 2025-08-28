@@ -12,18 +12,45 @@ function t37o_field($key, $default = '') {
   return $default;
 }
 
+// Helper: normalize ACF image field (ID, Array, or URL) into src + alt
+function t37o_img_parts($raw) {
+  if (is_array($raw)) {
+    return [
+      'src' => $raw['url'] ?? '',
+      'alt' => $raw['alt'] ?? ''
+    ];
+  }
+  if (is_numeric($raw)) { // attachment ID
+    $src = wp_get_attachment_image_url((int)$raw, 'full') ?: '';
+    $alt = get_post_meta((int)$raw, '_wp_attachment_image_alt', true) ?: '';
+    return ['src' => $src, 'alt' => $alt];
+  }
+  // assume it's a plain URL string
+  return ['src' => (string)$raw, 'alt' => ''];
+}
+
+// Get ACF image fields
+$dot1_raw = t37o_field('dot1_label', '');
+$dot2_raw = t37o_field('dot2_label', '');
+
+$dot1_img = t37o_img_parts($dot1_raw);
+$dot2_img = t37o_img_parts($dot2_raw);
+
+$dot1_label_src = $dot1_img['src'];
+$dot1_label_alt = $dot1_img['alt'];
+$dot2_label_src = $dot2_img['src'];
+$dot2_label_alt = $dot2_img['alt'];
+
 $map_img = t37o_field('map_image', get_stylesheet_directory_uri().'/assets/img/map-placeholder.png');
 $map_img_mobile = t37o_field('map_image_mobile', ''); 
 
 $dot1 = [
   'x' => t37o_field('dot1_x', '62'),
   'y' => t37o_field('dot1_y', '50'),
-  'label' => t37o_field('dot1_label', 'Greece'),
 ];
 $dot2 = [
   'x' => t37o_field('dot2_x', '21'),
   'y' => t37o_field('dot2_y', '53'),
-  'label' => t37o_field('dot2_label', 'Spain'),
 ];
 
 /** Architect 1 fields **/
@@ -79,14 +106,17 @@ $studio_locations = t37o_field('studio_locations', 'Madrid | Athens | Málaga');
       <a class="architect-cv" href="<?php echo esc_url($a1['cv']); ?>" target="_blank" rel="noopener">CV</a>
     </div>
 
-    <!-- Center map -->
-    <div class="contact-map"
-            data-dot1-x="<?php echo esc_attr($dot1['x']); ?>"
-            data-dot1-y="<?php echo esc_attr($dot1['y']); ?>"
-            data-dot1-label="<?php echo esc_attr($dot1['label']); ?>"
-            data-dot2-x="<?php echo esc_attr($dot2['x']); ?>"
-            data-dot2-y="<?php echo esc_attr($dot2['y']); ?>"
-            data-dot2-label="<?php echo esc_attr($dot2['label']); ?>">
+        <!-- Center map -->
+        <div class="contact-map"
+          data-dot1-x="<?php echo esc_attr($dot1['x']); ?>"
+          data-dot1-y="<?php echo esc_attr($dot1['y']); ?>"
+          data-dot2-x="<?php echo esc_attr($dot2['x']); ?>"
+          data-dot2-y="<?php echo esc_attr($dot2['y']); ?>"
+          <?php if ($dot1_label_src): ?>data-dot1-label-src="<?php echo esc_url($dot1_label_src); ?>"<?php endif; ?>
+          <?php if ($dot1_label_alt): ?>data-dot1-label-alt="<?php echo esc_attr($dot1_label_alt); ?>"<?php endif; ?>
+          <?php if ($dot2_label_src): ?>data-dot2-label-src="<?php echo esc_url($dot2_label_src); ?>"<?php endif; ?>
+          <?php if ($dot2_label_alt): ?>data-dot2-label-alt="<?php echo esc_attr($dot2_label_alt); ?>"<?php endif; ?>
+        >
 
         <picture class="contact-map__picture">
             <?php if ($map_img_mobile) : ?>
