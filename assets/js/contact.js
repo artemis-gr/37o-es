@@ -10,10 +10,10 @@
   if (!layout || !map || !overlay || !line || !label) return;
 
   // create one <img> and one <span> and reuse them
-  const labelImg  = document.createElement('img');
-  labelImg.className = 'contact-label__img';
-  const labelText = document.createElement('span');
-  labelText.className = 'contact-label__text';
+  const labelImg = document.createElement("img");
+  labelImg.className = "contact-label__img";
+  const labelText = document.createElement("span");
+  labelText.className = "contact-label__text";
   label.append(labelImg, labelText);
 
   // % from data attrs
@@ -115,38 +115,46 @@
   }
 
   function show(which) {
-    document.querySelectorAll('.js-arch-trigger')
-      .forEach(t => t.classList.toggle('is-active', t.dataset.target === which));
+    document
+      .querySelectorAll(".js-arch-trigger")
+      .forEach((t) =>
+        t.classList.toggle("is-active", t.dataset.target === which)
+      );
 
-    const isLeft   = which === 'left';
-    const src      = isLeft ? map.dataset.dot1LabelSrc : map.dataset.dot2LabelSrc;
-    const alt      = isLeft ? (map.dataset.dot1LabelAlt || '') : (map.dataset.dot2LabelAlt || '');
-    const fallback = isLeft ? (map.dataset.dot1Label || '')   : (map.dataset.dot2Label || '');
+    const isLeft = which === "left";
+    const src = isLeft ? map.dataset.dot1LabelSrc : map.dataset.dot2LabelSrc;
+    const alt = isLeft
+      ? map.dataset.dot1LabelAlt || ""
+      : map.dataset.dot2LabelAlt || "";
+    const fallback = isLeft
+      ? map.dataset.dot1Label || ""
+      : map.dataset.dot2Label || "";
 
     // make label renderable
-    label.setAttribute('aria-hidden', 'false');
-    label.style.display = 'block';
-    label.style.opacity = '0';
+    label.setAttribute("aria-hidden", "false");
+    label.style.display = "block";
+    label.style.opacity = "0";
 
     // toggle image vs text
     if (src) {
-      labelImg.hidden  = false;
+      labelImg.hidden = false;
       labelText.hidden = true;
       if (labelImg.src !== src) labelImg.src = src;
       labelImg.alt = alt;
     } else {
-      labelImg.hidden  = true;
+      labelImg.hidden = true;
       labelText.hidden = false;
       labelText.textContent = fallback;
     }
 
-    map.classList.add('is-hot');
+    map.classList.add("is-hot");
     setInteractiveLine(which);
-    line.classList.add('is-visible');
+    line.classList.add("is-visible");
 
-    requestAnimationFrame(() => { label.style.opacity = '1'; });
+    requestAnimationFrame(() => {
+      label.style.opacity = "1";
+    });
   }
-
 
   function hide() {
     document
@@ -191,17 +199,51 @@
 })();
 
 (function () {
+  if (window.__copyTipsInit) return;
+  window.__copyTipsInit = true;
+
   const items = document.querySelectorAll('.js-copy');
   if (!items.length) return;
 
-  items.forEach(el => {
+  items.forEach((el) => {
+    if (el.dataset.copyInit) return;
+    el.dataset.copyInit = '1';
+
+    // 1) Neutralize navigation so the OS doesn’t open mail/phone apps
+    const href = el.getAttribute('href');
+    if (href) {
+      el.dataset.href = href;       // keep it, just in case you need it later
+      el.removeAttribute('href');   // remove to fully disable navigation
+    }
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0'); // keep keyboard accessibility
+
+    // 2) Click handler
     el.addEventListener('click', (e) => {
-      // Let modifier-click open native handlers if desired; remove if you want to always block.
-      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // allow modifiers if you ever restore href
+      e.preventDefault();
+      e.stopPropagation();
+      e.stopImmediatePropagation();
+
+      const text = (el.dataset.copy || el.textContent || '').trim();
+      copy(text)
+        .then(() => flashTip(el, 'Copied'))
+        .catch(() => flashTip(el, 'Failed'));
+      return false; // belt & suspenders
+    });
+
+    // 3) Keyboard: Enter / Space
+    el.addEventListener('keydown', (e) => {
+      const isEnter = e.key === 'Enter' || e.keyCode === 13;
+      const isSpace = e.key === ' ' || e.key === 'Spacebar' || e.keyCode === 32;
+      if (!isEnter && !isSpace) return;
 
       e.preventDefault();
+      e.stopPropagation();
       const text = (el.dataset.copy || el.textContent || '').trim();
-      copy(text).then(() => flashTip(el, 'Copied')).catch(() => flashTip(el, 'Failed'));
+      copy(text)
+        .then(() => flashTip(el, 'Copied'))
+        .catch(() => flashTip(el, 'Failed'));
     });
   });
 
@@ -209,7 +251,7 @@
     if (navigator.clipboard && window.isSecureContext) {
       return navigator.clipboard.writeText(text);
     }
-    // Fallback for non-HTTPS or older browsers
+    // Fallback (non-HTTPS/older browsers)
     return new Promise((resolve, reject) => {
       const ta = document.createElement('textarea');
       ta.value = text;
@@ -235,13 +277,11 @@
       el.appendChild(tip);
     }
     tip.textContent = msg;
-    // show
-    requestAnimationFrame(() => tip.classList.add('is-visible'));
-    // auto-hide after 1.2s
+    tip.classList.add('is-visible');
+
     clearTimeout(el._tipTimer);
     el._tipTimer = setTimeout(() => {
       tip.classList.remove('is-visible');
     }, 1200);
   }
 })();
-

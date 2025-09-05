@@ -201,11 +201,7 @@ body.page-template-page-contact .contact-page {
 .architect-cv {
   margin-top: 1rem;
 }
-
-.js-copy {
-  position: relative;
-}
-
+.js-copy { position: relative; cursor: pointer; }
 .copy-tip {
   position: absolute;
   left: 50%;
@@ -220,11 +216,7 @@ body.page-template-page-contact .contact-page {
   opacity: 0;
   transition: opacity 0.15s ease;
 }
-
-.copy-tip.is-visible {
-  opacity: 1;
-  transform: translate(-50%, -8px);
-}
+.copy-tip.is-visible { opacity: 1; }
 
 /* ===== Desktop adjustments ===== */
 @media (min-width: 900px) {
