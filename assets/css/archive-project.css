@@ -1,0 +1,96 @@
+/* Footer still fixed as you have */
+body.post-type-archive-project .site-footer {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 100;
+}
+
+/* The scroll container is the page; give it viewport height minus footer */
+.projects-page {
+  height: calc(100svh - var(--footer-h-mobile));
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
+  /* optional: smoother feel on touchpads */
+  scroll-padding-top: 0;
+  display: block;
+}
+
+/* Desktop footer height */
+@media (min-width: 900px) {
+  .projects-page {
+    height: calc(100svh - var(--footer-h-desktop));
+  }
+}
+
+/* Rows are the snap points */
+.projects-grid {
+  /* no grid here anymore; rows are stacked block elements */
+  margin: 0;
+  padding: 0;
+}
+
+.projects-row {
+  min-height: calc(100svh - var(--footer-h-mobile));
+  scroll-snap-align: start;
+
+  display: grid;
+  grid-template-columns: repeat(2, 350px);
+  /* tune your spacing inside the row */
+  column-gap: 35rem;  /* horizontal gap between the two cards */
+  row-gap: 25rem;     /* probably 0 because it’s a single row, but keep if titles wrap */
+
+  justify-content: center;   /* center the pair horizontally */
+  align-content: center;     /* center vertically within the viewport */
+  padding: 0 18%;
+}
+
+@media (min-width: 900px) {
+  .projects-row {
+    min-height: calc(100svh - var(--footer-h-desktop));
+  }
+}
+
+/* Medium–big screens tweak gaps/padding as you like */
+@media (min-width: 1200px) and (max-width: 1499px) {
+  .projects-row { column-gap: 24rem; padding: 0 18%; }
+}
+@media (min-width: 900px) and (max-width: 1199px) {
+  .projects-row { column-gap: 6rem; padding: 0 10%; }
+}
+@media (min-width: 781px) and (max-width: 899px) {
+  .projects-row { column-gap: 3rem; padding: 0 10%; }
+}
+
+/* Mobile: no snapping, single column stacking */
+@media (max-width: 780px) {
+  .projects-page { scroll-snap-type: none; height: auto; overflow: visible; }
+  .projects-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;       /* equal vertical gap between all projects */
+    padding: 15%;
+    padding-bottom: calc(var(--footer-h-mobile) + 24px + env(safe-area-inset-bottom));
+  }
+  .projects-row {
+    display: contents; /* “remove” the wrapper, children flow normally */
+    padding: 0;
+    row-gap: 0;
+  }
+}
+
+/* Card hover overlay (unchanged) */
+.project-card__media { position: relative; overflow: hidden; }
+.project-card__media::after {
+  content: ""; position: absolute; inset: 0;
+  background-color: #c7dae5; opacity: 0; transition: opacity .3s ease; pointer-events: none;
+}
+.project-card__link:hover .project-card__media::after,
+.project-card__link:focus .project-card__media::after { opacity: .8; }
+
+/* Card sizing/text (your existing rules) */
+.project-card { max-width: 350px; width: 100%; }
+.project-card img { width: 100%; height: auto; display: block; }
+.project-card__head { display:flex; justify-content:space-between; align-items:baseline; gap:1rem; }
+.project-title { font-family:"Noto Serif Display", GeorgiaCustom, Georgia, serif; font-weight:800; font-style:italic; letter-spacing:.1rem; margin:.5rem 0 0; flex:1; }
+.project-location { font-weight:bold; font-size:.9rem; white-space:nowrap; }
+.project-card h2 { margin:.5rem 0 0; font-size:1.15rem; letter-spacing:.40rem; }
+.project-subtitle { margin:.25rem 0 0; color:#949494; font-size:.85rem; font-weight:bold; font-style:italic; }
+.project-card__link { display:block; text-decoration:none; color:inherit; }

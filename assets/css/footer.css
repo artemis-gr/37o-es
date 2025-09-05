@@ -7,6 +7,7 @@
   justify-content: space-around;
   gap: 20px;
   position: relative;
+  background: white;
 }
 
 .footer-logo img {
@@ -65,6 +66,7 @@
     padding: 3rem; 
     gap: 12rem;
     justify-content: flex-start;
+    background: white;
   }
 
   .footer-link {

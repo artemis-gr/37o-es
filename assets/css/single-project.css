@@ -1,0 +1,133 @@
+/* Footer is fixed on single project (you already had this) */
+body.single-project .site-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+}
+
+/* Layout scaffolding */
+.project-page {
+  /* reserve room so content doesn’t sit under the pinned bits */
+  padding: 1.5rem; /* mobile default */
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.project-title {
+  font-family: "Noto Serif Display", GeorgiaCustom, Georgia, serif;
+  font-weight: 800;
+  font-style: italic;
+  margin: 0;
+}
+
+.project-hero {
+  position: relative;
+}
+
+/* Image */
+.project-hero__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-top: 6rem;
+}
+
+/* Default (mobile): normal flow */
+.project-hero__title-pin {
+  position: relative;
+  text-align: left;
+}
+.project-subtitle {
+  margin: 0.25rem 0 0;
+  font-style: italic;
+  display: none;
+}
+
+/* Meta (mobile): normal flow stack */
+.project-hero__meta-pin {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+}
+.meta__item {
+  opacity: 0.85;
+}
+.meta__label {
+  font-weight: 700;
+  margin-right: 0.25rem;
+}
+.meta__value {
+  font-weight: 400;
+}
+
+/* Body content width */
+.project-content {
+  margin: 2rem auto;
+  max-width: 860px;
+}
+
+/* Desktop sticky behaviour */
+@media (min-width: 900px) {
+  .project-page {
+    padding-bottom: calc(var(--footer-h-desktop) + 2.5rem);
+  }
+
+  .project-hero__title-pin {
+    position: fixed;
+    z-index: 101;
+    top: 1.25rem;
+    left: 2rem;
+    right: auto;
+    font-size: 1rem;
+    letter-spacing: 0.4rem;
+    text-align: left;
+    pointer-events: none; 
+  }
+  .project-title {
+    pointer-events: auto;
+  } 
+
+  .project-subtitle {
+    pointer-events: auto;
+  } 
+
+  /* Sticky meta aligned to inner right edge, above the fixed footer */
+  .project-hero__meta-pin {
+    position: fixed;
+    z-index: 101;
+    right: 2rem; /* your custom right offset */
+    bottom: calc(
+      var(--footer-h-desktop) / 2
+    ); /* anchor at footer vertical center */
+    transform: translateY(50%); 
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: flex-end;
+    background: transparent;
+    pointer-events: none;
+    font-size: 0.8rem;
+  }
+  .project-hero__meta-pin .meta__item {
+    pointer-events: auto;
+  }
+
+  /* Slightly stronger label style on desktop */
+  .meta__label {
+    font-weight: 800;
+  }
+}
+
+/* Mobile polish */
+@media (max-width: 899px) {
+  .project-page {
+    padding: 1rem;
+  }
+  .project-content {
+    max-width: 92vw;
+  }
+}
