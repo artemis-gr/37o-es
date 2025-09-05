@@ -1,6 +1,6 @@
 (function () {
   const mq = window.matchMedia("(min-width: 900px)");
-  if (!mq.matches) return; // 🚫 desktop-only
+  if (!mq.matches) return; // desktop-only
 
   const layout = document.querySelector(".contact-layout");
   const map = document.querySelector(".contact-map");
@@ -189,3 +189,59 @@
     if (!e.matches) hide();
   });
 })();
+
+(function () {
+  const items = document.querySelectorAll('.js-copy');
+  if (!items.length) return;
+
+  items.forEach(el => {
+    el.addEventListener('click', (e) => {
+      // Let modifier-click open native handlers if desired; remove if you want to always block.
+      if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+
+      e.preventDefault();
+      const text = (el.dataset.copy || el.textContent || '').trim();
+      copy(text).then(() => flashTip(el, 'Copied')).catch(() => flashTip(el, 'Failed'));
+    });
+  });
+
+  function copy(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      return navigator.clipboard.writeText(text);
+    }
+    // Fallback for non-HTTPS or older browsers
+    return new Promise((resolve, reject) => {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      ta.style.position = 'fixed';
+      ta.style.opacity = '0';
+      document.body.appendChild(ta);
+      ta.select();
+      try {
+        document.execCommand('copy') ? resolve() : reject();
+      } catch (err) {
+        reject(err);
+      } finally {
+        document.body.removeChild(ta);
+      }
+    });
+  }
+
+  function flashTip(el, msg) {
+    let tip = el.querySelector('.copy-tip');
+    if (!tip) {
+      tip = document.createElement('span');
+      tip.className = 'copy-tip';
+      el.appendChild(tip);
+    }
+    tip.textContent = msg;
+    // show
+    requestAnimationFrame(() => tip.classList.add('is-visible'));
+    // auto-hide after 1.2s
+    clearTimeout(el._tipTimer);
+    el._tipTimer = setTimeout(() => {
+      tip.classList.remove('is-visible');
+    }, 1200);
+  }
+})();
+

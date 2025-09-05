@@ -81,26 +81,28 @@ $studio_locations = t37o_field('studio_locations', 'Madrid | Athens | Málaga');
   <section class="contact-layout">
     <!-- Architect 1 (left) -->
     <div class="architect-card" data-architect="left">
-      <a class="architect-name js-arch-trigger"
-         href="<?php echo esc_url($a1['cv']); ?>"
-         data-target="left"
-         target="_blank" rel="noopener">
-         <?php echo esc_html($a1['name']); ?>
-      </a>
-      <div class="architect-role"><?php echo esc_html($a1['role']); ?></div>
+      <div class="architect-head js-arch-trigger" data-target="left" role="button" tabindex="0">
+        <a class="architect-name"
+          href="<?php echo esc_url($a1['cv']); ?>"
+          target="_blank" rel="noopener">
+          <?php echo esc_html($a1['name']); ?>
+        </a>
+        <div class="architect-role"><?php echo esc_html($a1['role']); ?></div>
+      </div>
 
       <?php if ($a1['phone1']) : ?>
-        <a class="architect-phone" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>">
+        <a
+          class="architect-phone js-copy"
+          data-copy="<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>"
+          href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>">
           <?php echo esc_html($a1['phone1']); ?>
         </a>
       <?php endif; ?>
-      <?php if ($a1['phone2']) : ?>
-        <a class="architect-phone" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone2'])); ?>">
-          <?php echo esc_html($a1['phone2']); ?>
-        </a>
-      <?php endif; ?>
 
-      <a class="architect-email" href="mailto:<?php echo esc_attr($a1['email']); ?>">
+      <a
+        class="architect-email js-copy"
+        data-copy="<?php echo esc_attr($a1['email']); ?>"
+        href="mailto:<?php echo esc_attr($a1['email']); ?>">
         <?php echo esc_html($a1['email']); ?>
       </a>
       <a class="architect-cv" href="<?php echo esc_url($a1['cv']); ?>" target="_blank" rel="noopener">CV</a>
@@ -118,16 +120,34 @@ $studio_locations = t37o_field('studio_locations', 'Madrid | Athens | Málaga');
           <?php if ($dot2_label_alt): ?>data-dot2-label-alt="<?php echo esc_attr($dot2_label_alt); ?>"<?php endif; ?>
         >
 
+        <!-- HERE??? -->
+        <?php
+        function t37o_original_media_url($raw) {
+          if (is_numeric($raw)) {
+            if (function_exists('wp_get_original_image_url')) {
+              return wp_get_original_image_url((int)$raw) ?: wp_get_attachment_url((int)$raw);
+            }
+            return wp_get_attachment_url((int)$raw);
+          }
+          return (string)$raw;
+        }
+
+        // In your template:
+        $map_gif_mobile_raw = t37o_field('map_image_mobile', '');
+        $map_gif_mobile_url = t37o_original_media_url($map_gif_mobile_raw);
+        ?>
         <picture class="contact-map__picture">
-            <?php if ($map_img_mobile) : ?>
-                <source media="(max-width: 899px)" srcset="<?php echo esc_url($map_img_mobile); ?>" />
-            <?php endif; ?>
-            <img
-                class="contact-map__img"
-                src="<?php echo esc_url($map_img); ?>"
-                alt="Studio map"
-                decoding="async"
-            />
+          <?php if ($map_gif_mobile_url): ?>
+            <source media="(max-width: 899px)" srcset="<?php echo esc_url($map_gif_mobile_url); ?>" data-no-lazy="1" />
+          <?php endif; ?>
+          <img
+            class="contact-map__img no-lazyload"
+            src="<?php echo esc_url($map_img); ?>"
+            alt="Studio map"
+            decoding="async"
+            loading="eager"
+            data-no-lazy="1"
+          />
         </picture>
 
         <span class="map-dot map-dot--1" style="--x:<?php echo esc_attr($dot1['x']); ?>%; --y:<?php echo esc_attr($dot1['y']); ?>%;"></span>
@@ -143,26 +163,28 @@ $studio_locations = t37o_field('studio_locations', 'Madrid | Athens | Málaga');
 
     <!-- Architect 2 (right) -->
     <div class="architect-card" data-architect="right">
-      <a class="architect-name js-arch-trigger"
-         href="<?php echo esc_url($a2['cv']); ?>"
-         data-target="right"
-         target="_blank" rel="noopener">
-         <?php echo esc_html($a2['name']); ?>
-      </a>
-      <div class="architect-role"><?php echo esc_html($a2['role']); ?></div>
+      <div class="architect-head js-arch-trigger" data-target="right" role="button" tabindex="0">
+        <a class="architect-name"
+          href="<?php echo esc_url($a2['cv']); ?>"
+          target="_blank" rel="noopener">
+          <?php echo esc_html($a2['name']); ?>
+        </a>
+        <div class="architect-role"><?php echo esc_html($a2['role']); ?></div>
+      </div>
 
       <?php if ($a2['phone1']) : ?>
-        <a class="architect-phone" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>">
+        <a
+          class="architect-phone js-copy"
+          data-copy="<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>"
+          href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>">
           <?php echo esc_html($a2['phone1']); ?>
         </a>
       <?php endif; ?>
-      <?php if ($a2['phone2']) : ?>
-        <a class="architect-phone" href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone2'])); ?>">
-          <?php echo esc_html($a2['phone2']); ?>
-        </a>
-      <?php endif; ?>
 
-      <a class="architect-email" href="mailto:<?php echo esc_attr($a2['email']); ?>">
+      <a
+        class="architect-email js-copy"
+        data-copy="<?php echo esc_attr($a2['email']); ?>"
+        href="mailto:<?php echo esc_attr($a2['email']); ?>">
         <?php echo esc_html($a2['email']); ?>
       </a>
       <a class="architect-cv" href="<?php echo esc_url($a2['cv']); ?>" target="_blank" rel="noopener">CV</a>

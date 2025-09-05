@@ -151,6 +151,11 @@ body.page-template-page-contact .contact-page {
   margin-top: 2.5rem;
 }
 
+.architect-head {
+  display: inline-block;
+  cursor: pointer;
+}
+
 .architect-name {
   background: none;
   border: 0;
@@ -178,6 +183,7 @@ body.page-template-page-contact .contact-page {
 
 .architect-role {
   opacity: 0.85;
+  cursor: pointer;
 }
 .architect-phone,
 .architect-email {
@@ -194,6 +200,30 @@ body.page-template-page-contact .contact-page {
 .architect-phone,
 .architect-cv {
   margin-top: 1rem;
+}
+
+.js-copy {
+  position: relative;
+}
+
+.copy-tip {
+  position: absolute;
+  left: 50%;
+  bottom: 40%;
+  padding: 5px 11px;
+  background-color: #f9f9f9;
+  color: #111;
+  font-size: 12px;
+  border: 1px solid #ccc;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s ease;
+}
+
+.copy-tip.is-visible {
+  opacity: 1;
+  transform: translate(-50%, -8px);
 }
 
 /* ===== Desktop adjustments ===== */
@@ -324,7 +354,7 @@ body.page-template-page-contact .contact-page {
   .contact-label__img {
     display: block;
     max-width: 22px;
-	padding-bottom: 5px;
+    padding-bottom: 5px;
     height: auto;
   }
 }
@@ -351,6 +381,7 @@ body.page-template-page-contact .contact-page {
   .contact-layout {
     width: 100%;
     margin-inline: auto;
+    padding: 0 0.5rem 5rem 0.5rem;
   }
 
   .studio-heading {
@@ -362,7 +393,7 @@ body.page-template-page-contact .contact-page {
 
   .architect-card[data-architect="left"],
   .architect-card[data-architect="right"] {
-    margin-top: 1.25rem; /* was 2.5rem */
+    margin-top: 10rem; 
   }
 
   /* Make sure the last block can’t push past the footer */
@@ -376,6 +407,23 @@ body.page-template-page-contact .contact-page {
   .contact-label,
   .map-dot {
     display: none !important;
+  }
+  .contact-map {
+    aspect-ratio: 23 / 9;
+  }
+  .copy-tip {
+    position: absolute;
+    left: 50%;
+    bottom: 40%;
+    padding: 3px 9px;
+    background-color: #f9f9f9;
+    color: #111;
+    font-size: 10px;
+    border: 1px solid #ccc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.15s ease;
   }
 }
 
@@ -393,15 +441,16 @@ body.page-template-page-contact .contact-page {
 
   .contact-layout {
     gap: 0.6rem 0;
+    padding: 0 0.5rem 4rem 0.5rem;
   }
 
   .contact-map {
     max-width: min(88vw, 340px);
-    aspect-ratio: 16 / 9;
+    aspect-ratio: 23 / 9;
   }
 
   .architect-card[data-architect="left"],
   .architect-card[data-architect="right"] {
-    margin-top: 1.5rem;
+    margin-top: 5rem;
   }
 }

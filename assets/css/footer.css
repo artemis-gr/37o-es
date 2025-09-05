@@ -63,7 +63,7 @@
   .site-footer { height: var(--footer-h-desktop); }
   .footer-inner { 
     padding: 3rem; 
-    gap: 8rem;
+    gap: 12rem;
     justify-content: flex-start;
   }
 
