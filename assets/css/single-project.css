@@ -52,6 +52,7 @@ body.single-project .site-footer {
   flex-wrap: wrap;
   justify-content: flex-end;
   margin-top: 0.75rem;
+  color: #373737;
 }
 .meta__item {
   opacity: 0.85;
@@ -68,6 +69,13 @@ body.single-project .site-footer {
 .project-content {
   margin: 2rem auto;
   max-width: 860px;
+}
+
+p {
+  color: #373737;
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 600;
+  font-style: italic;
 }
 
 /* Desktop sticky behaviour */
@@ -99,7 +107,7 @@ body.single-project .site-footer {
   .project-hero__meta-pin {
     position: fixed;
     z-index: 101;
-    right: 2rem; /* your custom right offset */
+    right: 3rem; 
     bottom: calc(
       var(--footer-h-desktop) / 2
     ); /* anchor at footer vertical center */

@@ -1,4 +1,7 @@
 /* FRONT should mirror CONTACT exactly */
+.footer-inner { 
+    background: transparent!important;
+}
 
 /* Base (desktop first) */
 .front-hero {

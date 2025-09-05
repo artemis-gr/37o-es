@@ -40,3 +40,12 @@
   font-style: italic;
   font-display: swap;
 }
+
+@font-face {
+  font-family: 'Cormorant Garamond';
+  src: url('../fonts/CormorantGaramond/CormorantGaramond-SemiBoldItalic.woff2') format('woff2'),
+       url('../fonts/CormorantGaramond/CormorantGaramond-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
