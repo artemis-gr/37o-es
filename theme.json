@@ -1,0 +1,28 @@
+{
+  "$schema": "https://schemas.wp.org/trunk/theme.json",
+  "version": 2,
+  "settings": {
+    "layout": {
+      "contentSize": "980px",
+      "wideSize": "1100px"
+    },
+    "custom": {
+      "editor": {
+        "contentPadding": "24px"
+      }
+    },
+    "spacing": {
+      "units": ["px", "rem", "em", "%", "vw", "vh"]
+    }
+  },
+  "styles": {
+    "layout": {
+      "contentSize": "980px",
+      "wideSize": "1100px"
+    },
+    "typography": {
+      "fontFamily": "'Cormorant Garamond', GeorgiaCustom, Georgia, serif",
+      "textColor": "#373737"
+    }
+  }
+}

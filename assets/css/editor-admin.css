@@ -1,0 +1,13 @@
+/* Hide “Wide width” and “Full width” in the alignment toolbar */
+.block-editor-block-toolbar [aria-label="Change alignment"] [aria-label="Wide width"],
+.block-editor-block-toolbar [aria-label="Change alignment"] [aria-label="Full width"] {
+  display: none !important;
+}
+
+/* Hide “Rounded” and “Default” style chips in the sidebar */
+.block-editor-block-styles__item[aria-label="Rounded"],
+.block-editor-block-styles__item[aria-label="Default"],
+.components-toggle-group-control-option[aria-label="Rounded"],
+.components-toggle-group-control-option[aria-label="Default"] {
+  display: none !important;
+}

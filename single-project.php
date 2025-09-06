@@ -34,12 +34,6 @@ if ($project_date) {
       <?php endif; ?>
     </div>
 
-    <?php if (!empty($hero['url'])): ?>
-      <figure class="project-hero__media">
-        <img src="<?php echo esc_url($hero['url']); ?>" alt="<?php echo esc_attr($hero['alt'] ?? ''); ?>">
-      </figure>
-    <?php endif; ?>
-
     <!-- Sticky meta row -->
     <div class="project-hero__meta-pin">
       <?php if ($location): ?>

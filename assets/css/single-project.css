@@ -1,4 +1,8 @@
-/* Footer is fixed on single project (you already had this) */
+/* ==========================================================
+   Layout & Footer
+   ========================================================== */
+
+/* Footer fixed on single project */
 body.single-project .site-footer {
   position: fixed;
   left: 0;
@@ -7,12 +11,26 @@ body.single-project .site-footer {
   z-index: 100;
 }
 
-/* Layout scaffolding */
+/* Page scaffold (constrained container) */
 .project-page {
-  /* reserve room so content doesn’t sit under the pinned bits */
-  padding: 1.5rem; /* mobile default */
-  max-width: 1100px;
   margin: 0 auto;
+  overflow-x: clip;
+  max-width: 1350px; /* container cap */
+  padding-inline: 1.5rem; /* side breathing room */
+  padding-top: 2rem; /* top space (title/meta are pinned on desktop) */
+}
+
+/* Keep space so content doesn’t hide behind fixed footer (desktop overrides below) */
+.project-page {
+  padding-bottom: var(--footer-h-mobile, 72px);
+}
+
+/* ==========================================================
+   Hero: Title (left, sticky on desktop) + Meta (right, sticky on desktop)
+   ========================================================== */
+
+.project-hero {
+  position: relative;
 }
 
 .project-title {
@@ -22,30 +40,19 @@ body.single-project .site-footer {
   margin: 0;
 }
 
-.project-hero {
-  position: relative;
-}
-
-/* Image */
-.project-hero__media img {
-  display: block;
-  width: 100%;
-  height: auto;
-  margin-top: 6rem;
-}
-
-/* Default (mobile): normal flow */
+/* Default/mobile: title in normal flow */
 .project-hero__title-pin {
   position: relative;
   text-align: left;
 }
+
 .project-subtitle {
   margin: 0.25rem 0 0;
   font-style: italic;
-  display: none;
+  display: none; /* show if/when you want */
 }
 
-/* Meta (mobile): normal flow stack */
+/* Default/mobile: meta in normal flow (right-aligned row) */
 .project-hero__meta-pin {
   display: flex;
   gap: 0.75rem;
@@ -65,53 +72,146 @@ body.single-project .site-footer {
   font-weight: 400;
 }
 
-/* Body content width */
-.project-content {
-  margin: 2rem auto;
-  max-width: 860px;
-}
+/* ==========================================================
+   Project Content — Paragraphs
+   ========================================================== */
 
-p {
+.project-content p {
   color: #373737;
-  font-family: 'Cormorant Garamond', serif;
+  font-family: "Cormorant Garamond", serif;
   font-weight: 600;
   font-style: italic;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  margin: 0.9rem auto 0;
+  max-width: 58ch;
 }
 
-/* Desktop sticky behaviour */
+/* Larger / smaller paragraph variants */
+.project-content p.is-style-proj-text-large {
+  font-size: 1.175rem;
+  line-height: 1.6;
+}
+.project-content p.is-style-proj-text-small {
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* ==========================================================
+   Project Content — Images
+   ========================================================== */
+
+/* Center all images by default */
+.wp-block-image img {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: auto;
+  max-width: 100%;
+}
+
+/* FULL-BLEED (block itself bleeds to viewport) */
+.wp-block-image.is-style-proj-img-full {
+  width: 100vw;
+  max-width: none;
+  margin-left: 50%;
+  transform: translateX(-50%);
+  margin-block: 1rem 2rem;
+}
+/* Fill the full-bleed block */
+.wp-block-image.is-style-proj-img-full img {
+  width: 100%;
+  height: auto;
+  max-width: none;
+}
+
+/* LARGE (comfortable reading width) */
+.wp-block-image.is-style-proj-img-large img {
+  width: 92%;
+  max-width: 980px;
+  margin-inline: auto;
+}
+
+/* SMALL (narrow figure) */
+.wp-block-image.is-style-proj-img-small img {
+  width: 70%;
+  max-width: 560px;
+  margin-inline: auto;
+}
+
+/* ==========================================================
+   Project Content — Galleries
+   ========================================================== */
+
+/* === Gallery: Two images (style = proj-gallery-two) ===
+   Match the Large image width + tight, consistent gap */
+.wp-block-gallery.is-style-proj-gallery-two {
+  /* match Large image width */
+  width: 92%;
+  max-width: 980px;
+  margin: 1.25rem auto;
+
+  /* override WP’s built-in gallery gaps */
+  --wp--style--gallery-gap: 1rem;
+  --gallery-block--gutter-size: 1rem;
+}
+
+/* Use core’s nested layout hook but force exactly 2 columns */
+.wp-block-gallery.is-style-proj-gallery-two.has-nested-images {
+  display: grid !important;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: var(--wp--style--gallery-gap) !important;
+  justify-items: stretch;
+  align-items: start;
+}
+
+/* Nuke rogue margins Gutenberg puts on items/figures */
+.wp-block-gallery.is-style-proj-gallery-two.has-nested-images .wp-block-image,
+.wp-block-gallery.is-style-proj-gallery-two.has-nested-images figure {
+  margin: 0 !important;
+  width: auto !important;  /* prevent core calc widths from sticking */
+}
+
+/* Images fill their column; height follows aspect ratio */
+.wp-block-gallery.is-style-proj-gallery-two.has-nested-images img {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+
+/* ==========================================================
+   Breakpoints
+   ========================================================== */
+
 @media (min-width: 900px) {
+  /* Leave room for the fixed footer on desktop */
   .project-page {
-    padding-bottom: calc(var(--footer-h-desktop) + 2.5rem);
+    padding-bottom: calc(var(--footer-h-desktop, 96px) + 2.5rem);
   }
 
+  /* Sticky title (top-left) */
   .project-hero__title-pin {
     position: fixed;
     z-index: 101;
     top: 1.25rem;
     left: 2rem;
     right: auto;
-    font-size: 1rem;
-    letter-spacing: 0.4rem;
     text-align: left;
-    pointer-events: none; 
+    pointer-events: none;
   }
-  .project-title {
-    pointer-events: auto;
-  } 
-
+  .project-title,
   .project-subtitle {
     pointer-events: auto;
-  } 
+  }
 
-  /* Sticky meta aligned to inner right edge, above the fixed footer */
+  /* Sticky meta (right, vertically aligned with footer center) */
   .project-hero__meta-pin {
     position: fixed;
     z-index: 101;
-    right: 3rem; 
-    bottom: calc(
-      var(--footer-h-desktop) / 2
-    ); /* anchor at footer vertical center */
-    transform: translateY(50%); 
+    right: 3rem;
+    bottom: calc(var(--footer-h-desktop, 96px) / 2);
+    transform: translateY(50%);
     display: flex;
     gap: 1rem;
     align-items: baseline;
@@ -123,19 +223,50 @@ p {
   .project-hero__meta-pin .meta__item {
     pointer-events: auto;
   }
-
-  /* Slightly stronger label style on desktop */
   .meta__label {
     font-weight: 800;
   }
+
+  /* Image width tweaks on larger screens */
+  .wp-block-image.is-style-proj-img-large img {
+    width: 90%;
+    max-width: 1100px;
+  }
+  .wp-block-image.is-style-proj-img-small img {
+    width: 62%;
+    max-width: 640px;
+  }
+
+  .wp-block-gallery.is-style-proj-gallery-two {
+    width: 90%;
+    max-width: 1100px;
+    --wp--style--gallery-gap: 1.5rem;
+    --gallery-block--gutter-size: 1.5rem;
+  }
 }
 
-/* Mobile polish */
 @media (max-width: 899px) {
-  .project-page {
-    padding: 1rem;
+  /* Mobile: generous but not edge-to-edge for large/small */
+  .wp-block-image.is-style-proj-img-large img {
+    width: 96%;
+    max-width: none;
   }
-  .project-content {
-    max-width: 92vw;
+  .wp-block-image.is-style-proj-img-small img {
+    width: 82%;
+    max-width: none;
+  }
+
+  /* Mobile body text a touch larger */
+  .project-content p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+  }
+  .project-content p.is-style-proj-text-small {
+    font-size: 1rem;
+  }
+
+  .wp-block-gallery.is-style-proj-gallery-two.has-nested-images {
+    grid-template-columns: 1fr !important;
+    gap: 0.65rem !important;
   }
 }
