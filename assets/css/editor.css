@@ -28,151 +28,138 @@
    Paragraphs (Editor)
    ========================= */
 
-/* Center the PARAGRAPH BLOCK itself (the wrapper), not just the <p> tag */
-.editor-styles-wrapper
-  .block-editor-block-list__layout
-  .wp-block[data-type="core/paragraph"] {
-  max-width: 48ch; /* your default/“Large” width */
-  margin-left: auto !important; /* center the block */
+/* Center the PARAGRAPH BLOCK (wrapper), left-align the text */
+.editor-styles-wrapper .block-editor-block-list__layout .wp-block[data-type="core/paragraph"]{
+  max-width: 48ch;
+  margin-left: auto !important;
   margin-right: auto !important;
 }
-
-/* Text styling for default = “Large” */
 .editor-styles-wrapper .wp-block[data-type="core/paragraph"],
-.editor-styles-wrapper p.wp-block-paragraph {
+.editor-styles-wrapper p.wp-block-paragraph{
   font-family: "Cormorant Garamond", GeorgiaCustom, Georgia, serif;
   font-weight: 600;
   font-style: italic;
   font-size: 1.05rem;
   line-height: 1.6;
-  text-align: left; /* left-align the text itself */
+  text-align: left;
   color: #373737;
 }
+.editor-styles-wrapper .wp-block[data-type="core/paragraph"].is-style-proj-text-large{ max-width:48ch; }
+.editor-styles-wrapper .wp-block[data-type="core/paragraph"].is-style-proj-text-small{
+  max-width:38ch; font-size:.95rem; line-height:1.5;
+}
+/* Fallbacks */
+.editor-styles-wrapper p.wp-block-paragraph.is-style-proj-text-large,
+.editor-styles-wrapper p.wp-block-paragraph.is-style-proj-text-small{
+  margin-left:auto; margin-right:auto;
+}
+.editor-styles-wrapper p.wp-block-paragraph.is-style-proj-text-large{ max-width:48ch; }
+.editor-styles-wrapper p.wp-block-paragraph.is-style-proj-text-small{ max-width:38ch; }
 
-/* “Large” style = same width as default */
-.editor-styles-wrapper
-  .wp-block[data-type="core/paragraph"].is-style-proj-text-large {
-  max-width: 48ch;
+/* =========================
+   Image Styles (Editor)
+   ========================= */
+
+/* Full-bleed preview: fill editor width cleanly */
+.editor-styles-wrapper .wp-block-image.is-style-proj-img-full{ margin:1.25rem 0 3rem; }
+.editor-styles-wrapper .wp-block-image.is-style-proj-img-full img{
+  display:block; width:100% !important; max-width:100% !important; height:auto;
+  margin-left:0 !important; margin-right:0 !important;
 }
 
-/* “Small” style = narrower */
-.editor-styles-wrapper
-  .wp-block[data-type="core/paragraph"].is-style-proj-text-small {
-  max-width: 38ch;
-  font-size: 0.95rem;
-  line-height: 1.5;
+/* Large / Small / Default */
+.editor-styles-wrapper .wp-block-image.is-style-proj-img-large img{
+  display:block; width:65% !important; max-width:620px !important; margin-inline:auto;
+}
+.editor-styles-wrapper .wp-block-image.is-style-proj-img-small img{
+  display:block; width:42% !important; max-width:340px !important; margin-inline:auto;
+}
+.editor-styles-wrapper .wp-block-image:not([class*="is-style-proj-img-"]) img{
+  display:block; width:65% !important; max-width:620px !important; margin-inline:auto;
 }
 
-/* Fallback for older editor markup that uses p.wp-block-paragraph directly */
-.editor-styles-wrapper p.wp-block-paragraph.is-style-proj-text-large {
-  max-width: 48ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-.editor-styles-wrapper p.wp-block-paragraph.is-style-proj-text-small {
-  max-width: 38ch;
-  margin-left: auto;
-  margin-right: auto;
-}
-
-/* ==========================================================
-   Image Styles (EDITOR)
-   ========================================================== */
-
-/* --- FULL-BLEED: subtle overshoot --- */
-.editor-styles-wrapper .wp-block-image.is-style-proj-img-full {
-  margin: 1.25rem 0 3rem;
-}
-
-.editor-styles-wrapper .wp-block-image.is-style-proj-img-full img {
-  display: block;
-  width: 100% !important; /* flush with editor width */
-  max-width: 100% !important;
-  margin-left: 0 !important;
-  margin-right: 0 !important;
-  height: auto;
-}
-
-/* --- LARGE: tighter --- */
-.editor-styles-wrapper .wp-block-image.is-style-proj-img-large img {
-  display: block;
-  width: 65% !important; /* was 72% */
-  max-width: 620px !important;
-  margin-inline: auto;
-}
-
-/* --- SMALL: very compact --- */
-.editor-styles-wrapper .wp-block-image.is-style-proj-img-small img {
-  display: block;
-  width: 42% !important; /* was 50% */
-  max-width: 340px !important;
-  margin-inline: auto;
-}
-
-/* --- DEFAULT (no custom style) → same as Large --- */
-.editor-styles-wrapper .wp-block-image:not([class*="is-style-proj-img-"]) img {
-  display: block;
-  width: 65% !important;
-  max-width: 620px !important;
-  margin-inline: auto;
-}
-
-/* Inserter breathing room */
-.editor-styles-wrapper
-  .wp-block-image.is-style-proj-img-full
-  + .block-editor-default-block-appender {
-  margin-top: 1.5rem;
+/* Give the inserter some room after full-bleed */
+.editor-styles-wrapper .wp-block-image.is-style-proj-img-full + .block-editor-default-block-appender{
+  margin-top:1.5rem;
 }
 
 /* =========================
-   Gallery — Two images (EDITOR)
-   Style: proj-gallery-two
+   Gallery — Two images (Editor)
+   style: proj-gallery-two
    ========================= */
 
-/* Match your editor's “Large” image scale (65% / 620px in your editor.css) */
-.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two {
-  width: 65%;
-  max-width: 620px;
-  margin: 1.25rem auto;
-
-  /* set the same gap tokens the block reads */
-  --wp--style--gallery-gap: 1rem;
-  --gallery-block--gutter-size: 1rem;
+/* Make the block the same width as Large image in editor */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two{
+  width:65%;
+  max-width:620px;
+  margin:1.25rem auto;
+  list-style:none; padding:0;
+  /* the tokens core uses for gaps */
+  --wp--style--gallery-gap:1rem;
+  --gallery-block--gutter-size:1rem;
 }
 
-/* Force exactly 2 equal columns in the editor */
-.editor-styles-wrapper
-  .wp-block-gallery.is-style-proj-gallery-two.has-nested-images {
-  display: grid !important;
-  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-  gap: var(--wp--style--gallery-gap) !important;
-  justify-items: stretch;
-  align-items: start;
+/* Force exactly 2 equal columns */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two.has-nested-images{
+  display:grid !important;
+  grid-template-columns:repeat(2, minmax(0,1fr)) !important;
+  gap:var(--wp--style--gallery-gap) !important;
+  justify-items:stretch; align-items:start;
 }
 
-/* Neutralize core wrappers so our grid takes over */
-.editor-styles-wrapper
-  .wp-block-gallery.is-style-proj-gallery-two .wp-block-gallery__inner-container,
-.editor-styles-wrapper
-  .wp-block-gallery.is-style-proj-gallery-two .blocks-gallery-grid {
-  display: contents !important;
+/* Neutralize core wrappers so our grid sizes apply */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two .wp-block-gallery__inner-container,
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two .blocks-gallery-grid{ display:contents !important; }
+
+/* Nuke rogue margins/calc widths on items */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two .wp-block-image,
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two figure{
+  margin:0 !important; width:auto !important;
 }
 
-/* Strip rogue margins/calc widths */
-.editor-styles-wrapper
-  .wp-block-gallery.is-style-proj-gallery-two .wp-block-image,
-.editor-styles-wrapper
-  .wp-block-gallery.is-style-proj-gallery-two figure {
-  margin: 0 !important;
-  width: auto !important;
+/* Images fill their column */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two img{
+  display:block; width:100% !important; max-width:none !important; height:auto;
 }
 
-/* Images fill their column; height follows aspect ratio */
-.editor-styles-wrapper
-  .wp-block-gallery.is-style-proj-gallery-two img {
-  display: block;
-  width: 100%;
-  height: auto;
+/* =========================
+   Gallery — Multi images (Editor)
+   style: proj-gallery-multi
+   ========================= */
+
+/* Full-width inside editor canvas + equal tile height */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi{
+  width:100%;
+  margin:1.25rem 0 2rem;
+  list-style:none; padding:0;
+  --gap:1rem;
+  --thumb-h: 220px; /* editor preview height; adjust if you want smaller/bigger tiles */
+}
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi.has-nested-images{
+  display:grid !important;
+  gap:var(--gap) !important;
+  justify-items:stretch; align-items:start;
+}
+/* Neutralize wrappers */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi .wp-block-gallery__inner-container,
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi .blocks-gallery-grid{ display:contents !important; }
+/* Equal-height tiles (no cropping, keep orientation) */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi .wp-block-image,
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi figure{
+  margin:0 !important; width:auto !important;
+  height:var(--thumb-h);
+  display:flex; align-items:center; justify-content:center;
+}
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi img{
+  height:100%; width:auto; max-height:100%; max-width:100%; object-fit:contain;
+}
+/* If “Crop images” is toggled on, neutralize it */
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi.is-cropped img{
+  height:100% !important; object-fit:contain !important;
+}
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi.is-cropped .wp-block-image,
+.editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-multi.is-cropped figure{
+  aspect-ratio:auto !important;
 }
 
 /* ==========================================================
@@ -189,9 +176,8 @@
     max-width: 640px;
   }
   .editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two {
-    /* mirror your desktop tweak on the front-end */
-    --wp--style--gallery-gap: 1.5rem;
-    --gallery-block--gutter-size: 1.5rem;
+    --wp--style--gallery-gap:1.5rem;
+    --gallery-block--gutter-size:1.5rem;
   }
 }
 
@@ -218,5 +204,9 @@
     /* mirror your desktop tweak on the front-end */
     --wp--style--gallery-gap: 1.5rem;
     --gallery-block--gutter-size: 1.5rem;
+  }
+  .editor-styles-wrapper .wp-block-gallery.is-style-proj-gallery-two.has-nested-images{
+    grid-template-columns:1fr !important;
+    gap:.65rem !important;
   }
 }
