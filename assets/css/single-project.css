@@ -2,38 +2,73 @@
    Layout & Footer
    ========================================================== */
 
-/* Tune these once and forget */
+/* Tune once */
 :root {
-  --page-gutter: 1.5rem;         
-  --full-img-max: 1400px;         
+  --page-gutter: 1.5rem;                     /* .project-page side padding */
+  --full-img-max: 1400px;                    /* desktop cap for “Full” images */
+  --footer-pad: calc(var(--footer-h-mobile, 72px) + env(safe-area-inset-bottom) + 24px);
 }
 
-/* Footer fixed on single project */
+html { scroll-behavior: auto; }
+
+/* Fixed footer only on single project */
 body.single-project .site-footer {
   position: fixed;
-  left: 0;
-  right: 0;
-  bottom: 0;
+  left: 0; right: 0; bottom: 0;
   z-index: 100;
 }
 
-/* Page scaffold (constrained container) */
+/* Constrained page container */
 .project-page {
   margin: 0 auto;
   overflow-x: visible;
-  max-width: 1600px; 
-  padding-inline: 1.5rem; 
-  padding-top: 2rem; 
-  padding-bottom: var(--footer-h-mobile, 72px);
+  max-width: 1600px;
+  padding-inline: var(--page-gutter);
+  padding-top: 2rem;
+  /* IMPORTANT: no bottom padding here—runway lives on .project-content */
+  padding-bottom: 0;
 }
 
 /* ==========================================================
-   Hero: Title (left, sticky on desktop) + Meta (right, sticky on desktop)
+   “Runway” so last blocks clear the fixed footer smoothly
    ========================================================== */
 
-.project-hero {
-  position: relative;
+/* Put the runway where the content actually scrolls */
+.project-page .project-content {
+  padding-bottom: var(--footer-pad);
 }
+
+/* Ensure focused/anchored items land above the footer */
+.project-page .project-content > * {
+  scroll-margin-bottom: var(--footer-pad);
+}
+
+/* Non-collapsing spacer at the very end */
+.project-page .project-content::after {
+  content: "";
+  display: block;
+  height: var(--footer-pad);
+}
+
+/* Stop last child margin from “eating” the spacer */
+.project-page .project-content > *:last-child { margin-bottom: 0 !important; }
+
+/* Slightly different runway on desktop (tweak if footer size differs) */
+@media (min-width: 900px) {
+  :root { --footer-pad-desktop: calc(var(--footer-h-desktop, 96px) + 24px); }
+  .project-page .project-content { padding-bottom: var(--footer-pad-desktop); }
+  .project-page .project-content > * { scroll-margin-bottom: var(--footer-pad-desktop); }
+  .project-page .project-content::after { height: var(--footer-pad-desktop); }
+}
+
+/* Optional: tame “rubber band” interactions a bit */
+html, body { overscroll-behavior-y: contain; }
+
+/* ==========================================================
+   Hero: Title (left, sticky on desktop) + Meta (right)
+   ========================================================== */
+
+.project-hero { position: relative; }
 
 .project-title {
   font-family: "Noto Serif Display", GeorgiaCustom, Georgia, serif;
@@ -42,40 +77,38 @@ body.single-project .site-footer {
   margin: 0;
 }
 
-/* Default/mobile: title in normal flow */
-.project-hero__title-pin {
-  position: relative;
-  text-align: left;
-}
+.project-hero__title-pin { position: relative; text-align: left; }
+.project-subtitle { margin: 0.25rem 0 0; font-style: italic; display: none; }
 
-.project-subtitle {
-  margin: 0.25rem 0 0;
-  font-style: italic;
-  display: none; 
-}
-
-/* Default/mobile: meta in normal flow (right-aligned row) */
 .project-hero__meta-pin {
-  display: flex;
-  gap: 0.75rem;
-  flex-wrap: wrap;
-  justify-content: flex-end;
-  margin-top: 0.75rem;
-  color: #373737;
+  display: flex; gap: 0.75rem; flex-wrap: wrap;
+  justify-content: flex-end; margin-top: 0.75rem; color: #373737;
 }
-.meta__item {
-  opacity: 0.85;
-}
-.meta__label {
-  font-weight: 700;
-  margin-right: 0.25rem;
-}
-.meta__value {
-  font-weight: 400;
+.meta__item { opacity: 0.85; }
+.meta__label { font-weight: 700; margin-right: 0.25rem; }
+.meta__value { font-weight: 400; }
+
+/* Desktop sticky positions */
+@media (min-width: 900px) {
+  .project-page { padding-top: 6rem; }
+  .project-hero__title-pin {
+    position: fixed; z-index: 101; top: 1.25rem; left: 2rem; right: auto;
+    text-align: left; pointer-events: none;
+  }
+  .project-title, .project-subtitle { pointer-events: auto; }
+  .project-hero__meta-pin {
+    position: fixed; z-index: 101; right: 3rem;
+    bottom: calc(var(--footer-h-desktop, 96px) / 2);
+    transform: translateY(50%);
+    display: flex; gap: 1rem; align-items: baseline; justify-content: flex-end;
+    background: transparent; pointer-events: none; font-size: 0.8rem;
+  }
+  .project-hero__meta-pin .meta__item { pointer-events: auto; }
+  .meta__label { font-weight: 800; }
 }
 
 /* ==========================================================
-   Project Content — Paragraphs
+   Paragraphs
    ========================================================== */
 
 .project-content p {
@@ -86,253 +119,141 @@ body.single-project .site-footer {
   font-size: 1.3rem;
   line-height: 1.55;
   margin: 0.9rem auto 0;
-  max-width: 58ch;
+  width: 62%;
+  max-width: 450px;
 }
 
-/* Larger / smaller paragraph variants */
-.project-content p.is-style-proj-text-large {
-  font-size: 1.175rem;
-  line-height: 1.6;
-}
-.project-content p.is-style-proj-text-small {
-  font-size: 0.95rem;
-  line-height: 1.5;
-}
+.project-content p.is-style-proj-text-large { font-size: 1.175rem; line-height: 1.6; }
+.project-content p.is-style-proj-text-small { font-size: 0.95rem; line-height: 1.5; }
 
 .has-small-font-size {
-  font-size: 1.1rem!important;
-  line-height: 1.5!important;
+  font-size: 1.1rem !important;
+  line-height: 1.5 !important;
   text-align: center;
 }
 
+/* Mobile paragraph comfort */
+@media (max-width: 899px) {
+  .project-hero__title-pin { padding-inline: var(--page-gutter); }
+  .project-content p { 
+    font-size: 1rem; 
+    line-height: 1.3; 
+    width: 70%;
+    max-width: 350px;
+  }
+  .project-content p.is-style-proj-text-small { font-size: 0.8rem; }
+  .has-small-font-size { font-size: 0.8rem !important; text-align: center; }
+  .project-hero__meta-pin {
+    font-size: 0.85rem; justify-content: flex-start; gap: 0.5rem;
+    margin-bottom: 2rem; padding-inline: var(--page-gutter);
+  }
+}
+
 /* ==========================================================
-   Project Content — Images
+   Images
    ========================================================== */
 
-/* Center all images by default */
+/* Center images by default */
 .wp-block-image img {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  height: auto;
-  max-width: 100%;
+  display: block; margin-left: auto; margin-right: auto; height: auto; max-width: 100%;
 }
 
-/* Base reset — don't let legacy bleed rules apply */
+/* --- Full image (desktop: wide but not bleeding; mobile: true edge-to-edge) --- */
+
+/* Reset legacy transforms/margins */
 .project-page .project-content .wp-block-image.is-style-proj-img-full {
-  position: relative;
-  left: auto;
-  transform: none;
-  width: auto;
-  max-width: none;
-  margin: 1rem 0 2rem;  
+  position: relative; left: auto; transform: none; width: auto; max-width: none;
+  margin: 1rem 0 2rem;  /* vertical spacing only */
 }
 
+/* Image itself */
 .project-page .project-content .wp-block-image.is-style-proj-img-full > img {
-  display: block;
-  width: 100%;
-  height: auto;
-  object-fit: contain;
+  display: block; width: 100%; height: auto; object-fit: contain;
 }
 
-/* LARGE (comfortable reading width) */
+/* Desktop: center to viewport and cap width */
+@media (min-width: 900px) {
+  .project-page .project-content .wp-block-image.is-style-proj-img-full {
+    left: 50%; transform: translateX(-50%);
+    width: min(var(--full-img-max), calc(100svw - (2 * var(--page-gutter))));
+    max-width: none !important; margin-left: 0; margin-right: 0;
+  }
+  .project-page .project-content .wp-block-image.is-style-proj-img-full > img {
+    width: 100% !important; max-width: none !important;
+  }
+}
+
+/* Mobile: true 100vw edge-to-edge without horizontal scroll */
+@media (max-width: 899px) {
+  html, body { width: 100%; overflow-x: hidden; }
+  .project-page {
+    width: 100%; box-sizing: border-box; padding-inline: 0 !important;
+    /* bottom runway handled by .project-content already */
+  }
+  .project-page .project-content .wp-block-image.is-style-proj-img-full {
+    position: static; left: auto; transform: none;
+    width: 100vw; max-width: 100vw;
+    margin: 0.75rem 0 1.25rem !important;
+  }
+  .project-page .project-content .wp-block-image.is-style-proj-img-full > img {
+    width: 100% !important; max-width: 100% !important; height: auto !important;
+    object-fit: contain; box-sizing: border-box;
+  }
+}
+
+/* Large / Small image widths */
 .wp-block-image.is-style-proj-img-large img {
-  width: 92%;
-  max-width: 800px;
-  margin-inline: auto;
+  width: 92%; max-width: 800px; margin-inline: auto;
+}
+.wp-block-image.is-style-proj-img-small img {
+  width: 70%; max-width: 350px; margin-inline: auto;
 }
 
-/* SMALL (narrow figure) */
-.wp-block-image.is-style-proj-img-small img {
-  width: 70%;
-  max-width: 350px;
-  margin-inline: auto;
+@media (min-width: 900px) {
+  .wp-block-image.is-style-proj-img-large img { width: 90%; max-width: 900px; }
+  .wp-block-image.is-style-proj-img-small img { width: 62%; max-width: 450px; }
 }
 
 /* ==========================================================
-   Project Content — Galleries
+   Galleries
    ========================================================== */
 
-/* === Gallery: Two images (style = proj-gallery-two) ===
-   Match the Large image width + tight, consistent gap */
+/* Two images (same total width as Large) */
 .wp-block-gallery.is-style-proj-gallery-two {
-  /* match Large image width */
-  width: 92%;
-  max-width: 800px;
-  margin: 1.25rem auto;
-
-  /* override WP’s built-in gallery gaps */
-  --wp--style--gallery-gap: 1rem;
-  --gallery-block--gutter-size: 1rem;
+  width: 92%; max-width: 800px; margin: 1.25rem auto;
+  --wp--style--gallery-gap: 1rem; --gallery-block--gutter-size: 1rem;
 }
-
-/* Use core’s nested layout hook but force exactly 2 columns */
 .wp-block-gallery.is-style-proj-gallery-two.has-nested-images {
   display: grid !important;
   grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
   gap: var(--wp--style--gallery-gap) !important;
-  justify-items: stretch;
-  align-items: start;
+  justify-items: stretch; align-items: start;
 }
-
-/* Nuke rogue margins Gutenberg puts on items/figures */
 .wp-block-gallery.is-style-proj-gallery-two.has-nested-images .wp-block-image,
 .wp-block-gallery.is-style-proj-gallery-two.has-nested-images figure {
-  margin: 0 !important;
-  width: auto !important;  /* prevent core calc widths from sticking */
+  margin: 0 !important; width: auto !important;
 }
-
-/* Images fill their column; height follows aspect ratio */
 .wp-block-gallery.is-style-proj-gallery-two.has-nested-images img {
-  display: block;
-  width: 100%;
-  height: auto;
+  display: block; width: 100%; height: auto;
 }
-
+@media (min-width: 900px) {
+  .wp-block-gallery.is-style-proj-gallery-two {
+    width: 90%; max-width: 900px;
+    --wp--style--gallery-gap: 1.5rem; --gallery-block--gutter-size: 1.5rem;
+  }
+}
+@media (max-width: 899px) {
+  .wp-block-gallery.is-style-proj-gallery-two.has-nested-images {
+    grid-template-columns: 1fr !important; gap: 0.65rem !important;
+  }
+}
 
 /* ==========================================================
-   Breakpoints
+   iOS momentum scrolling hint (optional)
    ========================================================== */
-
-@media (min-width: 900px) {
-  /* Leave room for the fixed footer on desktop */
-  .project-page {
-    padding-bottom: calc(var(--footer-h-desktop, 96px) + 2.5rem);
-    padding-top: 6rem;
-  }
-
-  /* Sticky title (top-left) */
-  .project-hero__title-pin {
-    position: fixed;
-    z-index: 101;
-    top: 1.25rem;
-    left: 2rem;
-    right: auto;
-    text-align: left;
-    pointer-events: none;
-  }
-  .project-title,
-  .project-subtitle {
-    pointer-events: auto;
-  }
-
-  /* Sticky meta (right, vertically aligned with footer center) */
-  .project-hero__meta-pin {
-    position: fixed;
-    z-index: 101;
-    right: 3rem;
-    bottom: calc(var(--footer-h-desktop, 96px) / 2);
-    transform: translateY(50%);
-    display: flex;
-    gap: 1rem;
-    align-items: baseline;
-    justify-content: flex-end;
-    background: transparent;
-    pointer-events: none;
-    font-size: 0.8rem;
-  }
-  .project-hero__meta-pin .meta__item {
-    pointer-events: auto;
-  }
-  .meta__label {
-    font-weight: 800;
-  }
-
-  /* Image width tweaks on larger screens */
-  .wp-block-image.is-style-proj-img-large img {
-    width: 90%;
-    max-width: 900px;
-  }
-  .wp-block-image.is-style-proj-img-small img {
-    width: 62%;
-    max-width: 450px;
-  }
-
-  .wp-block-gallery.is-style-proj-gallery-two {
-    width: 90%;
-    max-width: 900px;
-    --wp--style--gallery-gap: 1.5rem;
-    --gallery-block--gutter-size: 1.5rem;
-  }
-
-  .project-page .project-content .wp-block-image.is-style-proj-img-full {
-    left: 50%;
-    transform: translateX(-50%);
-    width: min(var(--full-img-max), calc(100svw - (2 * var(--page-gutter))));
-    max-width: none !important;
-    margin-left: 0;   
-    margin-right: 0;
-  }
-  .project-page .project-content .wp-block-image.is-style-proj-img-full > img {
-    width: 100% !important;
-    max-width: none !important;
-  }
-}
-
-@media (max-width: 899px) {
-  /* Mobile: generous but not edge-to-edge for large/small */
-  .wp-block-image.is-style-proj-img-large img {
-    width: 90%;
-    max-width: none;
-  }
-  .wp-block-image.is-style-proj-img-small img {
-    width: 70%;
-    max-width: none;
-  }
-
-  .project-hero__title-pin {
-    padding-inline: 1.5rem;
-  }
-  /* Mobile body text a touch larger */
-  .project-content p {
-    font-size: 1rem;
-    line-height: 1.3;
-    padding-inline: 1.5rem;
-  }
-  .project-content p.is-style-proj-text-small {
-    font-size: 0.8rem;
-  }
-  .has-small-font-size {
-    font-size: 0.8rem!important;
-    text-align: center;
-  }
-
-  .wp-block-gallery.is-style-proj-gallery-two.has-nested-images {
-    grid-template-columns: 1fr !important;
-    gap: 0.65rem !important;
-  }
-  .project-hero__meta-pin {
-    font-size: 0.85rem;
-    justify-content: flex-start;
-    gap: 0.5rem;
-    margin-bottom: 2rem;
-    padding-inline: 1.5rem;
-  }
-  /* 1) Keep the page itself from introducing horizontal scroll */
-  html, body { width: 100%; overflow-x: hidden; }
-  .project-page { 
-    width: 100%; 
-    box-sizing: border-box; 
-    padding-inline: 0!important;
-  }
-
-  /* 2) Full image figure: center to viewport with translate, not negative margins */
-  .project-page .project-content .wp-block-image.is-style-proj-img-full {
-    position: relative;
-    left: 50%;
-    transform: translateX(-50%);  
-    width: 100vw;                  
-    max-width: 100vw;
-    margin: 0.75rem 0 1.25rem !important; 
-  }
-
-  /* 3) Image fills its figure, nothing more */
-  .project-page .project-content .wp-block-image.is-style-proj-img-full > img {
-    display: block;
-    width: 100% !important;        
-    max-width: 100% !important;
-    height: auto !important;
-    object-fit: contain;
-    box-sizing: border-box;
+@supports (-webkit-overflow-scrolling: touch) {
+  .project-page [style*="overflow"],
+  .project-page .is-style-proj-img-full [style*="overflow"] {
+    -webkit-overflow-scrolling: touch;
   }
 }
