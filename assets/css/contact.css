@@ -23,18 +23,18 @@ body.page-template-page-contact .contact-page {
 .contact-layout {
   position: relative;
   display: grid;
-  gap: 1rem 0rem;
+  gap: 1rem 0;
   align-items: start;
   justify-items: center;
   padding: 1rem 0.5rem;
   margin: 0 auto;
 
-  /* Mobile: map full row, then details full row, then two columns for architects */
-  grid-template-columns: minmax(180px, 1fr) minmax(180px, 1fr);
+  grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr);
   grid-template-areas:
-    "map     map"
-    "details details"
-    "left    right";
+    "details  details"
+    "map      map"
+    "founders founders"
+    "left     right";
 }
 
 /* ===== Full-row overlay for the animated line + label ===== */
@@ -46,12 +46,14 @@ body.page-template-page-contact .contact-page {
   pointer-events: none;
   z-index: 6;
 }
+
 .contact-line {
   stroke: var(--teal);
   stroke-width: 1;
   stroke-linecap: round;
   opacity: 0;
-  transition: opacity 0.1s ease-out 0.02s,
+  transition:
+    opacity 0.1s ease-out 0.02s,
     stroke-dashoffset 0.38s cubic-bezier(0.2, 0.8, 0.2, 1) 0.02s;
 }
 
@@ -59,20 +61,18 @@ body.page-template-page-contact .contact-page {
   opacity: 1;
 }
 
-/* ensure the label box is visible and above everything */
 .contact-label {
   position: absolute;
-  z-index: 999; /* higher than .contact-overlay (6) and map (1) */
+  z-index: 999;
   pointer-events: none;
   transform: translate(-50%, -100%);
-  opacity: 0; /* JS sets to 1 on show() */
+  opacity: 0;
   transition: opacity 0.2s ease;
 }
 
-/* give the image a real size */
 .contact-label__img {
   display: block;
-  max-width: 40px; /* tweak as needed */
+  max-width: 40px;
   height: auto;
 }
 
@@ -82,7 +82,7 @@ body.page-template-page-contact .contact-page {
   }
 }
 
-/* ===== Map block (dots remain inside the map) ===== */
+/* ===== Map block ===== */
 .contact-map {
   grid-area: map;
   position: relative;
@@ -92,7 +92,6 @@ body.page-template-page-contact .contact-page {
   justify-self: center;
 }
 
-/* Dots positioned by CSS vars (these vars ALREADY include %) */
 .map-dot {
   --size: 5px;
   position: absolute;
@@ -106,7 +105,6 @@ body.page-template-page-contact .contact-page {
   z-index: 2;
 }
 
-/* Map image sits under overlays */
 .contact-map__img {
   display: block;
   width: 100%;
@@ -119,36 +117,72 @@ body.page-template-page-contact .contact-page {
 /* ===== Studio details ===== */
 .studio-details {
   grid-area: details;
-  text-align: center;
+  width: 100%;
+  justify-self: start;
+  align-self: start;
+  text-align: left;
+  color: var(--contact-grey);
+  margin-bottom: 0;
 }
 
-.studio-heading {
-  font-family: "Noto Serif Display", GeorgiaCustom, Georgia, serif;
-  font-weight: 800;
-  font-style: italic;
-  margin: 0.25rem 0 0;
-  font-size: 1rem;
-  color: var(--teal);
-  letter-spacing: 0.1rem;
+.studio-details__name,
+.studio-details__sector,
+.studio-details__location,
+.studio-details__email {
+  display: block;
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  margin-top: 0.25rem;
+  text-decoration: none;
+  color: var(--contact-grey);
 }
-.studio-locations {
-  font-size: 0.7rem;
+
+.studio-details__name {
+  font-weight: bold;
+  margin-top: 0;
+}
+
+.studio-details__sectors {
+  margin-top: 0.35rem;
+}
+
+.studio-details__location {
+  margin-top: 0.75rem;
+}
+
+.studio-details__email {
+  margin-top: 0;
+}
+
+.studio-details__email:hover {
+  text-decoration: underline;
+}
+
+/* ===== Founders label ===== */
+.founders-label {
+  grid-area: founders;
+  width: 100%;
+  justify-self: start;
+  align-self: end;
+  text-align: left;
+  color: var(--contact-grey);
+  font-size: 0.8rem;
+  line-height: 0.8rem;
+  font-weight: bold;
   margin: 0.25rem 0 0;
-  color: var(--teal);
-  padding-top: 0.25rem;
-  font-style: italic;
 }
 
 /* ===== Architect cards ===== */
 .architect-card[data-architect="left"] {
   grid-area: left;
   text-align: left;
-  margin-top: 2.5rem;
+  margin-top: 0;
 }
+
 .architect-card[data-architect="right"] {
   grid-area: right;
   text-align: right;
-  margin-top: 2.5rem;
+  margin-top: 0;
 }
 
 .architect-head {
@@ -185,10 +219,12 @@ body.page-template-page-contact .contact-page {
   opacity: 0.85;
   cursor: pointer;
 }
+
 .architect-phone,
 .architect-email {
   opacity: 0.9;
 }
+
 .architect-cv {
   text-decoration: none;
 }
@@ -201,7 +237,12 @@ body.page-template-page-contact .contact-page {
 .architect-cv {
   margin-top: 1rem;
 }
-.js-copy { position: relative; cursor: pointer; }
+
+.js-copy {
+  position: relative;
+  cursor: pointer;
+}
+
 .copy-tip {
   position: absolute;
   left: 50%;
@@ -216,12 +257,19 @@ body.page-template-page-contact .contact-page {
   opacity: 0;
   transition: opacity 0.15s ease;
 }
-.copy-tip.is-visible { opacity: 1; }
+
+.copy-tip.is-visible {
+  opacity: 1;
+}
 
 /* ===== Desktop adjustments ===== */
 @media (min-width: 900px) {
   body.page-template-page-contact .contact-page {
+    min-height: 100svh;
     padding-bottom: var(--footer-h-desktop);
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .contact-layout {
@@ -231,15 +279,20 @@ body.page-template-page-contact .contact-page {
 
     grid-template-columns: 1fr minmax(520px, 700px) 1fr;
     grid-template-areas:
-      "left map right"
-      "details details details";
-    align-items: center;
+      "details  .    ."
+      "founders .    ."
+      "left     map  right";
+    align-items: start;
 
-    gap: 2.5rem;
+    column-gap: 2.5rem;
+    row-gap: 0;
   }
 
   .contact-map {
-    margin-top: 10rem;
+    max-width: 700px;
+    justify-self: center;
+    align-self: start;
+    margin-top: -9rem;
   }
 
   .contact-map__img {
@@ -253,39 +306,28 @@ body.page-template-page-contact .contact-page {
   }
 
   .architect-card[data-architect="left"] {
-    grid-area: left;
-    text-align: left;
     justify-self: start;
     text-align: left;
-    margin-top: 12.5rem;
+    margin-top: 0;
   }
+
   .architect-card[data-architect="right"] {
-    grid-area: right;
-    text-align: right;
     justify-self: end;
     text-align: right;
-    margin-top: 12.5rem;
+    margin-top: 0;
   }
 
   .architect-name {
-    background: none;
-    border: 0;
-    padding: 0;
     font-size: 0.98rem;
     line-height: 0.98rem;
-    text-decoration: none;
-    position: relative;
-    cursor: pointer;
   }
 
   .architect-role,
   .architect-phone,
   .architect-email,
   .architect-cv {
-    display: block;
     font-size: 0.95rem;
     line-height: 0.95rem;
-    margin-top: 0.25rem;
   }
 
   .architect-phone,
@@ -293,25 +335,32 @@ body.page-template-page-contact .contact-page {
     margin-top: 1.5rem;
   }
 
-  .studio-heading {
-    margin: 0;
-    font-size: 1.2rem;
-    font-weight: bold;
-    font-style: italic;
-    color: var(--teal);
-    letter-spacing: 0.23rem;
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email {
+    font-size: 0.95rem;
+    line-height: 0.95rem;
   }
 
-  .studio-locations {
-    font-size: 0.85rem;
-    padding-top: 1.8rem;
-    font-style: italic;
+  .studio-details__email {
+    margin-top: 0.25rem;
   }
 
-  .contact-map {
-    max-width: 700px;
-    justify-self: center;
+  .studio-details {
+    max-width: 260px;
+    justify-self: start;
+    align-self: start;
+    margin-top: 0rem;
+    margin-bottom: 0;
   }
+
+  .founders-label {
+    font-size: 0.95rem;
+    line-height: 0.95rem;
+    margin: 4rem 0 4rem;
+  }
+
 
   .map-dot {
     --size: 6px;
@@ -319,18 +368,20 @@ body.page-template-page-contact .contact-page {
     transform: scale(0.7);
     transition: opacity 0.18s ease, transform 0.18s ease;
   }
-  /* When map is "hot", reveal dots */
+
   .contact-map.is-hot .map-dot {
     opacity: 1;
     transform: scale(1);
   }
-  /* (Optional) tiny stagger for fun */
+
   .contact-map.is-hot .map-dot--1 {
     transition-delay: 0.02s;
   }
+
   .contact-map.is-hot .map-dot--2 {
     transition-delay: 0.06s;
   }
+
   .contact-line {
     stroke-width: 0.8;
   }
@@ -338,11 +389,13 @@ body.page-template-page-contact .contact-page {
   .contact-label[aria-hidden="false"] {
     display: block !important;
   }
+
   .contact-label {
     position: absolute;
     pointer-events: none;
     transition: opacity 0.2s;
   }
+
   .contact-label__img {
     display: block;
     max-width: 22px;
@@ -353,11 +406,10 @@ body.page-template-page-contact .contact-page {
 
 /* ===== Mobile fit: no page scrollbar, content fits between header & fixed footer ===== */
 @media (max-width: 899px) {
-  /* Remove the page scrollbar; the contact-page manages its own height */
   html,
   body {
     height: 100%;
-    overflow: hidden; /* no global scrollbar on mobile */
+    overflow: hidden;
   }
 
   body.page-template-page-contact .contact-page {
@@ -369,40 +421,52 @@ body.page-template-page-contact .contact-page {
     overflow: clip;
   }
 
-  /* keep the grid centered horizontally */
   .contact-layout {
     width: 100%;
     margin-inline: auto;
-    padding: 0 0.5rem 5rem 0.5rem;
+    padding: 0 1.5rem 5rem;
+    grid-template-areas:
+      "details ."
+      "map     map"
+      "left    right";
   }
 
-  .studio-heading {
-    margin-top: 0.15rem;
-  }
-  .studio-locations {
-    padding-top: 0.15rem;
+  .studio-details {
+    width: 100%;
+    max-width: 180px;
+    justify-self: start;
+    text-align: left;
   }
 
-  .architect-card[data-architect="left"],
+  .architect-card[data-architect="left"] {
+    justify-self: start;
+    margin-top: 2.5rem;
+  }
+
   .architect-card[data-architect="right"] {
-    margin-top: 10rem; 
+    justify-self: end;
+    margin-top: 2.5rem;
   }
 
-  /* Make sure the last block can’t push past the footer */
+  .founders-label {
+    display: none;
+  }
+
   .contact-layout > *:last-child {
     margin-bottom: 0 !important;
     padding-bottom: 0 !important;
   }
 
-  /* No animated overlay/dots on mobile */
   .contact-overlay,
   .contact-label,
   .map-dot {
     display: none !important;
   }
+
   .contact-map {
     aspect-ratio: 23 / 9;
   }
+
   .copy-tip {
     position: absolute;
     left: 50%;
@@ -419,21 +483,21 @@ body.page-template-page-contact .contact-page {
   }
 }
 
-/* Very short screens (e.g., iPhone SE in landscape / small heights) */
+/* Very short screens */
 @media (max-width: 899px) and (max-height: 700px) {
   body.page-template-page-contact .contact-page {
     height: calc(100dvh - var(--footer-h-mobile));
     min-height: auto;
     padding-bottom: 0;
+    padding-top: 10vh;
     align-items: flex-start;
     justify-content: center;
     overflow: hidden;
-    padding-top: 10vh;
   }
 
   .contact-layout {
     gap: 0.6rem 0;
-    padding: 0 0.5rem 4rem 0.5rem;
+    padding: 0 0.5rem 4rem;
   }
 
   .contact-map {
@@ -441,8 +505,17 @@ body.page-template-page-contact .contact-page {
     aspect-ratio: 23 / 9;
   }
 
-  .architect-card[data-architect="left"],
+  .architect-card[data-architect="left"] {
+    justify-self: start;
+    margin-top: 2.5rem;
+  }
+
   .architect-card[data-architect="right"] {
-    margin-top: 5rem;
+    justify-self: end;
+    margin-top: 2.5rem;
+  }
+
+  .founders-label {
+    display: none;
   }
 }

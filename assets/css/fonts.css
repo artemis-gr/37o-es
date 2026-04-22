@@ -42,9 +42,38 @@
 }
 
 @font-face {
+  font-family: "Cormorant Garamond";
+  src: url("../fonts/CormorantGaramond/CormorantGaramond-BoldItalic.woff2") format("woff2"),
+       url("../fonts/CormorantGaramond/CormorantGaramond-BoldItalic.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Cormorant Garamond';
   src: url('../fonts/CormorantGaramond/CormorantGaramond-SemiBoldItalic.woff2') format('woff2'),
        url('../fonts/CormorantGaramond/CormorantGaramond-SemiBoldItalic.woff') format('woff');
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* Minion Pro Semibold */
+@font-face {
+  font-family: 'MinionPro';
+  src: url('../fonts/MinionPro/MinionPro-Semibold.woff2') format('woff2'),
+       url('../fonts/MinionPro/MinionPro-Semibold.woff') format('woff');
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Minion Pro Semibold Italic */
+@font-face {
+  font-family: 'MinionPro';
+  src: url('../fonts/MinionPro/MinionPro-SemiboldIt.woff2') format('woff2'),
+       url('../fonts/MinionPro/MinionPro-SemiboldIt.woff') format('woff');
   font-weight: 600;
   font-style: italic;
   font-display: swap;

@@ -1,4 +1,3 @@
-/* Footer still fixed as you have */
 body.post-type-archive-project .site-footer {
   position: fixed;
   left: 0;
@@ -12,7 +11,6 @@ body.post-type-archive-project .site-footer {
   height: calc(100svh - var(--footer-h-mobile));
   overflow-y: auto;
   scroll-snap-type: y mandatory;
-  /* optional: smoother feel on touchpads */
   scroll-padding-top: 0;
   display: block;
 }
@@ -24,63 +22,95 @@ body.post-type-archive-project .site-footer {
   }
 }
 
-/* Rows are the snap points */
+/* Rows are stacked; each row is a snap point on desktop/tablet */
 .projects-grid {
-  /* no grid here anymore; rows are stacked block elements */
   margin: 0;
   padding: 0;
 }
 
+/* DESKTOP DEFAULT */
 .projects-row {
+  --card-w: 350px;
+  --a: max(2rem, calc((100vw - (2 * var(--card-w))) / 4));
+
   min-height: calc(100svh - var(--footer-h-mobile));
   scroll-snap-align: start;
 
   display: grid;
-  grid-template-columns: repeat(2, 350px);
-  /* tune your spacing inside the row */
-  column-gap: 35rem; /* horizontal gap between the two cards */
-  row-gap: 25rem; /* probably 0 because it’s a single row, but keep if titles wrap */
-
-  justify-content: center; /* center the pair horizontally */
-  align-content: center; /* center vertically within the viewport */
-  padding: 0 18%;
+  grid-template-columns: repeat(2, var(--card-w));
+  column-gap: calc(var(--a) * 2);
+  justify-content: start;
+  align-content: center;
+  padding-inline: var(--a);
+  box-sizing: border-box;
 }
 
-/* Card hover overlay (unchanged) */
+@media (min-width: 900px) {
+  .projects-row {
+    min-height: calc(100svh - var(--footer-h-desktop));
+  }
+}
+
+/* Tablet: still 2 columns, but relax the strict a / 2a / a formula */
+@media (min-width: 900px) and (max-width: 1199px) {
+  .projects-row {
+    min-height: calc(100svh - var(--footer-h-desktop));
+    grid-template-columns: repeat(2, minmax(260px, 320px));
+    justify-content: center;
+    align-content: center;
+    column-gap: clamp(2rem, 5vw, 4rem);
+    padding-inline: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .project-card {
+    max-width: 320px;
+  }
+}
+
+/* Card hover overlay */
 .project-card__media {
   position: relative;
   overflow: hidden;
 }
+
 .project-card__media::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background-color: #c7dae5;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  pointer-events: none;
-}
-.project-card__link:hover .project-card__media::after,
-.project-card__link:focus .project-card__media::after {
-  opacity: 0.8;
+  content: none;
 }
 
-/* Card sizing/text (your existing rules) */
+/* Add smooth scaling to the image */
+.project-card__media img {
+  display: block;
+  width: 100%;
+  height: auto;
+  transition: transform 0.4s ease;
+  transform-origin: center center;
+}
+
+/* On hover (or focus on link) scale up the image */
+.project-card__link:hover .project-card__media img,
+.project-card__link:focus .project-card__media img {
+  transform: scale(1.05);
+}
+
+/* Card sizing/text */
 .project-card {
   max-width: 350px;
   width: 100%;
 }
+
 .project-card img {
   width: 100%;
   height: auto;
   display: block;
 }
+
 .project-card__head {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   gap: 1rem;
 }
+
 .project-title {
   font-family: "Noto Serif Display", GeorgiaCustom, Georgia, serif;
   font-weight: 800;
@@ -89,78 +119,126 @@ body.post-type-archive-project .site-footer {
   margin: 0.5rem 0 0;
   flex: 1;
 }
+
 .project-location {
-  font-weight: bold;
-  font-size: 0.9rem;
+  font-size: 1rem;
   white-space: nowrap;
+  font-family: 'MinionPro', serif;
+  font-weight: 600;
 }
+
 .project-card h2 {
-  margin: 0.5rem 0 0;
+  margin: 1rem 0 0;
   font-size: 1.15rem;
   letter-spacing: 0.4rem;
 }
+
 .project-subtitle {
   margin: 0.25rem 0 0;
   color: #949494;
-  font-size: 0.85rem;
-  font-weight: bold;
+  font-size: 1rem;
+  font-family: 'MinionPro', serif;
+  font-weight: 600;
   font-style: italic;
 }
+
 .project-card__link {
   display: block;
   text-decoration: none;
   color: inherit;
 }
 
-
-@media (min-width: 900px) {
-  .projects-row {
-    min-height: calc(100svh - var(--footer-h-desktop));
-  }
-}
-
-/* Medium–big screens tweak gaps/padding as you like */
-@media (min-width: 1200px) and (max-width: 1499px) {
-  .projects-row {
-    column-gap: 24rem;
-    padding: 0 18%;
-  }
-}
-@media (min-width: 900px) and (max-width: 1199px) {
-  .projects-row {
-    column-gap: 6rem;
-    padding: 0 10%;
-  }
-}
-
-/* Mobile: no snapping, single column stacking */
+/* Mobile: single column stacking with snap per card */
 @media (max-width: 899px) {
+  html,
+  body {
+    height: 100%;
+  }
+
+  body.post-type-archive-project {
+    overflow: hidden;
+  }
+
+  /* The scrollable viewport area (minus fixed footer) */
   .projects-page {
-    scroll-snap-type: none;
-    height: auto;
-    overflow: visible;
+    height: calc(100svh - var(--footer-h-mobile));
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: y mandatory;
+    scroll-padding-top: 0;
   }
+
+  /* Don’t act like a grid container on mobile; the page snaps per card */
   .projects-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 3rem; /* equal vertical gap between all projects */
-    padding: 15%;
-    padding-bottom: calc(
-      var(--footer-h-mobile) + 24px + env(safe-area-inset-bottom)
-    );
-  }
-  .projects-row {
-    display: contents; /* “remove” the wrapper, children flow normally */
+    display: block;
     padding: 0;
-    row-gap: 0;
+    margin: 0;
   }
+
+  /* Row wrappers shouldn’t interfere with snapping */
+  .projects-row {
+    display: contents;
+    min-height: auto;
+    grid-template-columns: none;
+    column-gap: 0;
+    padding: 0;
+  }
+
+  /* Each card is one “slide” */
+  .project-card {
+    scroll-snap-align: center;
+    scroll-snap-stop: always;
+    min-height: calc(100svh - var(--footer-h-mobile));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 15% 10% 0 10%;
+    box-sizing: border-box;
+    max-width: none;
+    width: 100%;
+  }
+
+  /* Make the link content a neat column */
+  .project-card__link {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    max-width: min(92vw, 720px);
+    margin: 0 auto;
+  }
+
+  /* Keep your hover zoom */
+  .project-card__media {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .project-card__media img {
+    width: 100%;
+    height: auto;
+    display: block;
+    transform: translateZ(0);
+    transition: transform 0.4s ease;
+    transform-origin: center center;
+  }
+
+  .project-card__link:hover .project-card__media img,
+  .project-card__link:focus .project-card__media img {
+    transform: scale(1.05);
+  }
+
+  /* Mobile type tweaks */
   .project-card h2 {
     font-size: 1rem;
+    margin: 1rem 0 0;
   }
+
   .project-subtitle {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
+    margin: 0;
   }
+
   .project-location {
-    font-size: 0.75rem;
+    font-size: 0.9rem;
   }
 }
