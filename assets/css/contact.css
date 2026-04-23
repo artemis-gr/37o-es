@@ -277,7 +277,7 @@ body.page-template-page-contact .contact-page {
     padding: 0 2rem;
     margin: 0 auto;
 
-    grid-template-columns: 1fr minmax(520px, 700px) 1fr;
+    grid-template-columns: 1fr minmax(520px, 890px) 1fr;
     grid-template-areas:
       "details  .    ."
       "founders .    ."
@@ -289,10 +289,10 @@ body.page-template-page-contact .contact-page {
   }
 
   .contact-map {
-    max-width: 700px;
+    max-width: 890px;
     justify-self: center;
     align-self: start;
-    margin-top: -9rem;
+    margin-top: -12.5rem;
   }
 
   .contact-map__img {
@@ -343,6 +343,10 @@ body.page-template-page-contact .contact-page {
     line-height: 0.95rem;
   }
 
+  .studio-details__name {
+    line-height: 1.3rem;
+  }
+  
   .studio-details__email {
     margin-top: 0.25rem;
   }
@@ -401,6 +405,45 @@ body.page-template-page-contact .contact-page {
     max-width: 22px;
     padding-bottom: 5px;
     height: auto;
+  }
+}
+
+/* ===== Medium screens (laptops) ===== */
+@media (min-width: 1199px) and (max-width: 1500px) {
+  .contact-layout {
+    grid-template-columns: 1fr minmax(520px, 750px) 1fr;
+    column-gap: 1.5rem;
+  }
+
+  .contact-map {
+    margin-top: -10rem;
+    max-width: 750px;
+  }
+}
+
+/* ===== Medium screens (laptops) ===== */
+@media (min-width: 1000px) and (max-width: 1199px) {
+  .contact-layout {
+    grid-template-columns: 1fr minmax(520px, 500px) 1fr;
+    column-gap: 1.5rem;
+  }
+
+  .contact-map {
+    margin-top: -5.5rem;
+    max-width: 500px;
+  }
+}
+
+/* ===== Small laptops / big tablets ===== */
+@media (min-width: 900px) and (max-width: 999px) {
+  .contact-layout {
+    grid-template-columns: 1fr minmax(400px, 400px) 1fr;
+    column-gap: 1.5rem;
+  }
+
+  .contact-map {
+    margin-top: -4rem;
+    max-width: 400px;
   }
 }
 
