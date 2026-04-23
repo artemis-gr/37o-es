@@ -21,9 +21,6 @@
   const d1 = { x: p("dot1X"), y: p("dot1Y") };
   const d2 = { x: p("dot2X"), y: p("dot2Y") };
 
-  const LONG_TAIL = 90;
-  const SHORT_TAIL = 1050;
-
   function rects() {
     return {
       layout: layout.getBoundingClientRect(),
@@ -41,12 +38,21 @@
   function overlayPointFromElement(
     el,
     R,
-    { at = "bottom", xAlign = "center", yOffset = 4 } = {}
+    { at = "bottom", xAlign = "center", yOffset = 4 } = {},
   ) {
     const r = el.getBoundingClientRect();
-    const x = xAlign === "center" ? r.left + r.width / 2 : r.left;
+
+    let x;
+    if (xAlign === "left") x = r.left;
+    else if (xAlign === "right") x = r.right;
+    else x = r.left + r.width / 2;
+
     const y = at === "bottom" ? r.bottom : r.top;
-    return { x: x - R.layout.left, y: y - R.layout.top + yOffset };
+
+    return {
+      x: x - R.layout.left,
+      y: y - R.layout.top + yOffset,
+    };
   }
   function setLineAttrs(x1, y1, x2, y2) {
     line.setAttribute("x1", x1);
@@ -55,70 +61,169 @@
     line.setAttribute("y2", y2);
   }
 
+  function textPointFromElement(
+    el,
+    R,
+    { at = "bottom", char = "first", yOffset = 0 } = {},
+  ) {
+    const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, {
+      acceptNode(node) {
+        return node.textContent.trim().length
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_SKIP;
+      },
+    });
+
+    const textNode = walker.nextNode();
+    if (!textNode) {
+      return overlayPointFromElement(el, R, {
+        at,
+        xAlign: "left",
+        yOffset,
+      });
+    }
+
+    const text = textNode.textContent;
+    const range = document.createRange();
+
+    if (char === "first") {
+      range.setStart(textNode, 0);
+      range.setEnd(textNode, 1);
+    } else {
+      range.setStart(textNode, Math.max(0, text.length - 1));
+      range.setEnd(textNode, text.length);
+    }
+
+    const rect = range.getBoundingClientRect();
+    const x = char === "first" ? rect.left : rect.right;
+    const y = at === "bottom" ? rect.bottom : rect.top;
+
+    return {
+      x: x - R.layout.left,
+      y: y - R.layout.top + yOffset,
+    };
+  }
+
   function setInteractiveLine(which) {
     const R = rects();
     const A = dotPixels(d1, R);
     const B = dotPixels(d2, R);
 
-    const vx = B.x - A.x,
-      vy = B.y - A.y;
+    // unit vector along the map diagonal
+    const vx = B.x - A.x;
+    const vy = B.y - A.y;
     const L = Math.hypot(vx, vy) || 1;
-    const ux = vx / L,
-      uy = vy / L;
+    const ux = vx / L;
+    const uy = vy / L;
 
-    const activeEl = document.querySelector(
-      `.js-arch-trigger[data-target="${which}"]`
+    const activeName = document.querySelector(
+      `.js-arch-trigger[data-target="${which}"] .architect-name`,
     );
-    if (!activeEl) return;
+    const otherName = document.querySelector(
+      `.js-arch-trigger[data-target="${which === "left" ? "right" : "left"}"] .architect-name`,
+    );
 
-    const P = overlayPointFromElement(activeEl, R, {
-      at: "bottom",
-      xAlign: "center",
-      yOffset: 2,
-    });
-    const t = (P.x - A.x) * ux + (P.y - A.y) * uy;
-    const Sx = A.x + ux * t;
-    const Sy = A.y + uy * t;
+    if (!activeName || !otherName) return;
 
-    const longDir = which === "left" ? -1 : 1;
-    const shortDir = -longDir;
+    // Start from the active architect name:
+    // - left architect -> use the RIGHT edge of the name
+    // - right architect -> use the LEFT edge of the name
+    const startP =
+      which === "left"
+        ? overlayPointFromElement(activeName, R, {
+            at: "bottom",
+            xAlign: "left",
+            yOffset: 2,
+          })
+        : overlayPointFromElement(activeName, R, {
+            at: "bottom",
+            xAlign: "right",
+            yOffset: 2,
+          });
 
-    const x1 = Sx + ux * LONG_TAIL * longDir;
-    const y1 = Sy + uy * LONG_TAIL * longDir;
-    const x2 = Sx + ux * SHORT_TAIL * shortDir;
-    const y2 = Sy + uy * SHORT_TAIL * shortDir;
+    const endP =
+      which === "left"
+        ? overlayPointFromElement(otherName, R, {
+            at: "bottom",
+            xAlign: "right",
+            yOffset: 2,
+          })
+        : overlayPointFromElement(otherName, R, {
+            at: "bottom",
+            xAlign: "left",
+            yOffset: 2,
+          });
+
+    // Project both anchor points onto the same diagonal
+    const tStart = (startP.x - A.x) * ux + (startP.y - A.y) * uy;
+    const tEnd = (endP.x - A.x) * ux + (endP.y - A.y) * uy;
+
+    console.log("which:", which);
+    console.log("A (dot1):", A);
+    console.log("B (dot2):", B);
+    console.log("startP:", startP);
+    console.log("endP:", endP);
+    console.log("tStart:", tStart, "tEnd:", tEnd);
+
+    // Small inset so the line doesn't crash into the names
+    const endPad = Math.max(140, R.layout.width * 0.12);
+    const t2 = which === "left" ? tEnd - endPad : tEnd + endPad;
+
+    // Safety: if end is too close to start, bail
+    const projectedEndX = A.x + ux * t2;
+    const projectedEndY = A.y + uy * t2;
+    const distance = Math.hypot(
+      projectedEndX - startP.x,
+      projectedEndY - startP.y,
+    );
+    if (distance < 20) return;
+
+    // Use architect edge for X, but keep the line on the map-line Y
+    const x1 = startP.x;
+    const y1 = A.y;
+
+    const x2 = projectedEndX;
+    const y2 = A.y;
 
     const dash = Math.hypot(x2 - x1, y2 - y1);
     setLineAttrs(x1, y1, x2, y2);
     line.style.strokeDasharray = `${dash} ${dash}`;
     line.style.transition = "none";
 
-    // draw direction: left name = left→right, right name = right→left
-    const revealFromStart = which === "left" ? x1 <= x2 : x1 > x2;
-    line.style.strokeDashoffset = revealFromStart ? dash : -dash;
+    console.log("line start:", { x1, y1 });
+    console.log("line end:", { x2, y2 });
+
+    // Always reveal from x1 -> x2
+    line.style.strokeDashoffset = dash;
+
     void line.getBoundingClientRect();
+
     line.style.transition =
       "opacity .1s ease-out .02s, stroke-dashoffset .5s cubic-bezier(.4,0,.2,1) .02s";
     line.style.strokeDashoffset = "0";
 
-    // label near short side, slightly off the stroke
-    const along = 0.95;
-    const lx = x1 + (x2 - x1) * along;
-    const ly = y1 + (y2 - y1) * along;
-    const nx = -uy,
-      ny = ux;
+    // Place label near the end of the line, a bit before it, and above it
+    const endInset = 90; // how far before the end of the line
+    const lift = 2; // how much above the line
 
-    // IMPORTANT: we keep translate(-50%,-100%) in CSS,
-    // so left/top here indicate the anchor point
-    label.style.left = `${lx + nx * 3}px`;
-    label.style.top = `${ly + ny * 3}px`;
+    const lineLength = Math.hypot(x2 - x1, y2 - y1) || 1;
+    const dx = (x2 - x1) / lineLength;
+    const dy = (y2 - y1) / lineLength;
+
+    // point near the end, pulled back along the line
+    const lx = x2 - dx * endInset;
+    const ly = y2 - dy * endInset;
+
+    // always lift upward visually
+    label.style.left = `${lx}px`;
+    label.style.top = `${ly - lift}px`;
   }
 
   function show(which) {
     document
       .querySelectorAll(".js-arch-trigger")
       .forEach((t) =>
-        t.classList.toggle("is-active", t.dataset.target === which)
+        t.classList.toggle("is-active", t.dataset.target === which),
       );
 
     const isLeft = which === "left";
@@ -202,48 +307,48 @@
   if (window.__copyTipsInit) return;
   window.__copyTipsInit = true;
 
-  const items = document.querySelectorAll('.js-copy');
+  const items = document.querySelectorAll(".js-copy");
   if (!items.length) return;
 
   items.forEach((el) => {
     if (el.dataset.copyInit) return;
-    el.dataset.copyInit = '1';
+    el.dataset.copyInit = "1";
 
     // 1) Neutralize navigation so the OS doesn’t open mail/phone apps
-    const href = el.getAttribute('href');
+    const href = el.getAttribute("href");
     if (href) {
-      el.dataset.href = href;       // keep it, just in case you need it later
-      el.removeAttribute('href');   // remove to fully disable navigation
+      el.dataset.href = href; // keep it, just in case you need it later
+      el.removeAttribute("href"); // remove to fully disable navigation
     }
-    el.setAttribute('role', 'button');
-    el.setAttribute('tabindex', '0'); // keep keyboard accessibility
+    el.setAttribute("role", "button");
+    el.setAttribute("tabindex", "0"); // keep keyboard accessibility
 
     // 2) Click handler
-    el.addEventListener('click', (e) => {
+    el.addEventListener("click", (e) => {
       if (e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // allow modifiers if you ever restore href
       e.preventDefault();
       e.stopPropagation();
       e.stopImmediatePropagation();
 
-      const text = (el.dataset.copy || el.textContent || '').trim();
+      const text = (el.dataset.copy || el.textContent || "").trim();
       copy(text)
-        .then(() => flashTip(el, 'Copied'))
-        .catch(() => flashTip(el, 'Failed'));
+        .then(() => flashTip(el, "Copied"))
+        .catch(() => flashTip(el, "Failed"));
       return false; // belt & suspenders
     });
 
     // 3) Keyboard: Enter / Space
-    el.addEventListener('keydown', (e) => {
-      const isEnter = e.key === 'Enter' || e.keyCode === 13;
-      const isSpace = e.key === ' ' || e.key === 'Spacebar' || e.keyCode === 32;
+    el.addEventListener("keydown", (e) => {
+      const isEnter = e.key === "Enter" || e.keyCode === 13;
+      const isSpace = e.key === " " || e.key === "Spacebar" || e.keyCode === 32;
       if (!isEnter && !isSpace) return;
 
       e.preventDefault();
       e.stopPropagation();
-      const text = (el.dataset.copy || el.textContent || '').trim();
+      const text = (el.dataset.copy || el.textContent || "").trim();
       copy(text)
-        .then(() => flashTip(el, 'Copied'))
-        .catch(() => flashTip(el, 'Failed'));
+        .then(() => flashTip(el, "Copied"))
+        .catch(() => flashTip(el, "Failed"));
     });
   });
 
@@ -253,14 +358,14 @@
     }
     // Fallback (non-HTTPS/older browsers)
     return new Promise((resolve, reject) => {
-      const ta = document.createElement('textarea');
+      const ta = document.createElement("textarea");
       ta.value = text;
-      ta.style.position = 'fixed';
-      ta.style.opacity = '0';
+      ta.style.position = "fixed";
+      ta.style.opacity = "0";
       document.body.appendChild(ta);
       ta.select();
       try {
-        document.execCommand('copy') ? resolve() : reject();
+        document.execCommand("copy") ? resolve() : reject();
       } catch (err) {
         reject(err);
       } finally {
@@ -270,18 +375,18 @@
   }
 
   function flashTip(el, msg) {
-    let tip = el.querySelector('.copy-tip');
+    let tip = el.querySelector(".copy-tip");
     if (!tip) {
-      tip = document.createElement('span');
-      tip.className = 'copy-tip';
+      tip = document.createElement("span");
+      tip.className = "copy-tip";
       el.appendChild(tip);
     }
     tip.textContent = msg;
-    tip.classList.add('is-visible');
+    tip.classList.add("is-visible");
 
     clearTimeout(el._tipTimer);
     el._tipTimer = setTimeout(() => {
-      tip.classList.remove('is-visible');
+      tip.classList.remove("is-visible");
     }, 1200);
   }
 })();

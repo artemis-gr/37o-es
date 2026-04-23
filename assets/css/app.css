@@ -40,6 +40,12 @@ body {
   --footer-h-desktop: 120px;
   --teal: #73a1b8;
   --contact-grey: #65707c;
+
+  --site-side-inset: clamp(1.5rem, 4vw, 4.5rem);
+
+  /* desktop optical offsets */
+  --footer-contact-end-offset: 3.8rem;
+  --footer-projects-end-offset: 4.3rem;
 }
 
 /* Front page variant: add .is-front on the footer in PHP */

@@ -1,7 +1,8 @@
 .footer-inner {
   /* use inner padding so total height stays the token value */
   height: 100%;
-  padding: 0.6rem 0.5rem;     /* your current mobile padding */
+  padding-block: 0.6rem;
+  padding-inline: var(--site-side-inset);
   display: flex;              /* keep your existing layout */
   align-items: center;
   justify-content: space-around;
@@ -63,12 +64,12 @@
 @media (min-width: 900px) {
   .site-footer { height: var(--footer-h-desktop); }
   .footer-inner { 
-    padding: 3rem; 
     gap: 12rem;
     justify-content: flex-start;
     background: transparent;
+    padding-block: 3rem;
+    padding-inline: var(--site-side-inset);
   }
-
   .footer-link {
     font-size: 1rem;
   }
