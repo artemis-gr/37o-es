@@ -180,11 +180,9 @@
 
     const roleRect = roleEl.getBoundingClientRect();
 
-    // 👇 THIS is your new vertical anchor
     const offset = Math.max(6, R.layout.width * 0.003);
     const yLine = roleRect.bottom - R.layout.top + offset;
 
-    // Use architect edge for X, but role-based Y
     const x1 = startP.x;
     const y1 = yLine;
 
@@ -274,19 +272,45 @@
 
     label.style.opacity = "0";
     label.setAttribute("aria-hidden", "true");
-    // (optional) if you want to fully remove from flow after fade:
-    // setTimeout(() => { label.style.display = 'none'; }, 200);
   }
 
   // events
   const triggers = document.querySelectorAll(".js-arch-trigger");
 
+  let suppressHover = false;
+
+  function resetInteractiveLine() {
+    line.style.transition = "none";
+    label.style.transition = "none";
+
+    hide();
+
+    line.classList.remove("is-visible");
+    line.style.strokeDashoffset = "";
+    line.style.strokeDasharray = "";
+    line.setAttribute("x1", "0");
+    line.setAttribute("y1", "0");
+    line.setAttribute("x2", "0");
+    line.setAttribute("y2", "0");
+
+    label.style.opacity = "0";
+    label.style.display = "none";
+    label.setAttribute("aria-hidden", "true");
+
+    requestAnimationFrame(() => {
+      line.style.transition = "";
+      label.style.transition = "";
+    });
+  }
+
   function onEnter(e) {
+    if (suppressHover) return;
     show(e.currentTarget.dataset.target);
   }
 
   function onLeave() {
-    hide();
+    suppressHover = false;
+    resetInteractiveLine();
   }
 
   triggers.forEach((t) => {
@@ -294,11 +318,36 @@
     t.addEventListener("focus", onEnter);
     t.addEventListener("mouseleave", onLeave);
     t.addEventListener("blur", onLeave);
+
+    t.addEventListener(
+      "click",
+      () => {
+        suppressHover = true;
+        resetInteractiveLine();
+
+        if (document.activeElement) {
+          document.activeElement.blur();
+        }
+      },
+      true
+    );
   });
 
-  // Reset line when coming back from CV page (Safari cache etc)
+  document.addEventListener("visibilitychange", () => {
+    if (document.visibilityState === "hidden") {
+      suppressHover = true;
+      resetInteractiveLine();
+    }
+  });
+
   window.addEventListener("pageshow", () => {
-    hide();
+    suppressHover = false;
+    resetInteractiveLine();
+  });
+
+  window.addEventListener("focus", () => {
+    suppressHover = false;
+    resetInteractiveLine();
   });
 
   // keep alignment crisp on resize
