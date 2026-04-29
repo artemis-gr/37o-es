@@ -130,8 +130,8 @@ html, body { overscroll-behavior-y: contain; }
 .project-content p {
   color: #373737;
   font-family: "Cormorant Garamond", serif;
-  font-weight: 600;
-  font-style: italic;
+  font-weight: 400;
+  font-style: normal;
   font-size: 1.3rem;
   line-height: 1.55;
   margin: 0.9rem auto 1.5rem;
@@ -148,33 +148,65 @@ html, body { overscroll-behavior-y: contain; }
 
 /* Font sizes (unchanged) */
 .project-content p.has-proj-normal-font-size { 
-  font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.35rem)!important; 
-  line-height: 1.5;
-  font-weight: 500;
+  font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.35rem) !important; 
+  line-height: 1.55;
+  font-weight: 400;
 }
-.project-content p.has-proj-small-font-size  { 
-  font-size: 1rem!important; 
-  line-height: 1.3; }
-.project-content p strong {
+
+.project-content p.has-proj-small-font-size { 
+  font-size: 1rem !important; 
+  line-height: 1.3;
+  font-weight: 400;
+}
+
+.project-content p strong,
+.project-content p b {
   font-weight: 700;
-  font-style: normal;
+  font-style: inherit;
 }
+
+.project-content p em,
+.project-content p i {
+  font-style: italic;
+}
+
+/* Desktop readability test */
+@media (min-width: 900px) {
+  .project-content p {
+    max-width: 520px;
+  }
+
+  .project-content p.has-proj-normal-font-size {
+    font-size: clamp(1.35rem, 1.15rem + 0.6vw, 1.6rem) !important;
+    line-height: 1.55;
+  }
+
+  .project-content p.has-proj-small-font-size {
+    font-size: 1.1rem !important;
+    line-height: 1.4;
+  }
+}
+
 /* Mobile tweaks */
 @media (max-width: 899px) {
   .project-content p { 
-    font-size: 1rem; 
-    line-height: 1.3; 
-    width: 75%; 
-    max-width: 380px; 
+    width: 100%; 
+    max-width: none;
+    text-align: justify;
+    text-align-last: left;
   }
 
-  /* tweak all widths for mobile if you want */
-  .project-content p.is-style-proj-text-w-xsmall { width: 75%; max-width: 380px; }
-  .project-content p.is-style-proj-text-w-small  { width: 75%; max-width: 380px; }
-  .project-content p.is-style-proj-text-w-medium { width: 75%; max-width: 380px; }
-  .project-content p.is-style-proj-text-w-large  { width: 95%; max-width: 380px; }
+  .project-content p.is-style-proj-text-w-xsmall,
+  .project-content p.is-style-proj-text-w-small,
+  .project-content p.is-style-proj-text-w-medium {
+    width: 100%;
+    max-width: none;
+  }
 
-  .project-content p.has-proj-small-font-size { font-size: 0.9rem; line-height: 1.45; }
+  .project-content p.is-style-proj-text-w-large {
+    width: 100%;
+    max-width: none;
+  }
 }
 
 
@@ -432,5 +464,127 @@ html, body { overscroll-behavior-y: contain; }
     height: 100% !important;
     object-fit: cover !important;
     display: block;
+  }
+}
+
+/* Safari/mac centering safety */
+.project-page,
+.project-content {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.project-page .project-content > * {
+  justify-self: center;
+}
+
+.project-page .project-content .wp-block-image,
+.project-page .project-content .wp-block-image img {
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.project-page .project-content .wp-block-image {
+  display: grid;
+  justify-items: center;
+}
+
+/* Back to top button */
+.project-page .project-content > .back-to-top-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  margin-top: 3rem !important;
+  margin-bottom: 0 !important;
+
+  width: fit-content;
+}
+
+.project-page .project-content > .back-to-top-container .top-arrow {
+  width: 40px;
+  height: auto;
+  stroke-width: 2;
+  cursor: pointer;
+}
+
+/* copyright */
+.project-page .project-content > .project-copyright {
+  text-align: center;
+  font-size: 0.7rem;
+  color: #373737;
+  opacity: 0.85;
+  font-weight: 400;
+
+  margin-top: 3rem !important;
+}
+
+.project-page .project-content:has(.project-copyright)::after {
+  height: 2rem;
+}
+
+/* Mobile even smaller */
+@media (max-width: 899px) {
+  .project-page .project-content > .back-to-top-container {
+    margin-top: 2.5rem !important;
+  }
+
+  .project-page .project-content > .back-to-top-container .top-arrow {
+    width: 30px;
+    height: auto;
+    stroke-width: 2;
+  }
+
+  .project-page .project-content > .project-copyright {
+    font-size: 0.6rem;
+    margin-top: 2.5rem !important;
+  }
+}
+
+/* =========================
+   Multi-Image Gallery — FRONTEND
+   3–5 images, fit page width
+   ========================= */
+
+.multi-image-gallery.wp-block-thirtyseven-multi-image-gallery {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 1.25rem;
+  justify-content: center;
+  align-items: flex-start;
+
+  width: min(100%, 1400px);
+  margin: 1.5rem auto;
+}
+
+.multi-image-gallery.wp-block-thirtyseven-multi-image-gallery figure.wp-block-image {
+  margin: 0 !important;
+  flex: 1 1 0;
+  min-width: 0;
+  max-width: none !important;
+}
+
+.multi-image-gallery.wp-block-thirtyseven-multi-image-gallery img {
+  width: 100% !important;
+  height: auto !important;
+  max-height: 70vh;
+  object-fit: contain;
+  display: block;
+}
+
+/* Mobile: stack vertically */
+@media (max-width: 899px) {
+  .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery {
+    flex-direction: column;
+    gap: .75rem;
+    width: 100%;
+    max-width: none;
+  }
+
+  .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery figure.wp-block-image,
+  .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery img {
+    width: 100% !important;
+    max-height: none;
   }
 }

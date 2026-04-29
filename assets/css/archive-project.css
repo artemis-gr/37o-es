@@ -28,7 +28,7 @@ body.post-type-archive-project .site-footer {
   padding: 0;
 }
 
-/* DESKTOP DEFAULT */
+/* Desktop / large screens: strict a / 2a / a spacing */
 .projects-row {
   --card-w: 350px;
   --a: max(2rem, calc((100vw - (2 * var(--card-w))) / 4));
@@ -51,19 +51,22 @@ body.post-type-archive-project .site-footer {
   }
 }
 
-/* Tablet: still 2 columns, but relax the strict a / 2a / a formula */
-@media (min-width: 900px) and (max-width: 1199px) {
+/* Tablet: true a / a / a spacing */
+@media (min-width: 900px) and (max-width: 1366px) {
   .projects-row {
+    --card-w: 300px;
+    --a: max(2rem, calc((100vw - (2 * var(--card-w))) / 3));
+
     min-height: calc(100svh - var(--footer-h-desktop));
-    grid-template-columns: repeat(2, minmax(260px, 320px));
-    justify-content: center;
+    grid-template-columns: repeat(2, var(--card-w));
+    column-gap: var(--a);
+    padding-inline: var(--a);
+    justify-content: start;
     align-content: center;
-    column-gap: clamp(2rem, 5vw, 4rem);
-    padding-inline: clamp(1.5rem, 4vw, 3rem);
   }
 
   .project-card {
-    max-width: 320px;
+    max-width: var(--card-w);
   }
 }
 
@@ -240,5 +243,25 @@ body.post-type-archive-project .site-footer {
 
   .project-location {
     font-size: 0.9rem;
+  }
+}
+
+/* Large screens: scale cards so a / 2a / a doesn't become too airy */
+@media (min-width: 2000px) {
+  .projects-row {
+    --card-w: clamp(420px, 18vw, 520px);
+  }
+
+  .project-card {
+    max-width: var(--card-w);
+  }
+
+  .project-card h2 {
+    font-size: 1.35rem;
+  }
+
+  .project-subtitle,
+  .project-location {
+    font-size: 1.1rem;
   }
 }

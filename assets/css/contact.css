@@ -1,7 +1,9 @@
-/* Ensure these tokens exist in app.css (or define here) */
-/* :root { --footer-h-mobile: 96px; --footer-h-desktop: 120px; } */
+/* ===== Contact page ===== */
 
-/* Footer fixed only on Contact page (overlay) */
+body.page-template-page-contact {
+  overflow: hidden;
+}
+
 body.page-template-page-contact .site-footer {
   position: fixed;
   left: 0;
@@ -10,7 +12,6 @@ body.page-template-page-contact .site-footer {
   z-index: 100;
 }
 
-/* Contact page area fills viewport; center horizontally + keep space for footer */
 body.page-template-page-contact .contact-page {
   min-height: 100svh;
   padding-bottom: var(--footer-h-mobile);
@@ -19,25 +20,60 @@ body.page-template-page-contact .contact-page {
   justify-content: center;
 }
 
-/* Base: mobile-first grid */
+/* ===== Main layout: mobile first ===== */
+
 .contact-layout {
   position: relative;
+  width: 100%;
   display: grid;
-  gap: 1rem 0;
-  align-items: start;
-  justify-items: center;
+  gap: 1rem;
   padding: 1rem 0.5rem;
   margin: 0 auto;
-
-  grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr);
-  grid-template-areas:
-    "details  details"
-    "map      map"
-    "founders founders"
-    "left     right";
 }
 
-/* ===== Full-row overlay for the animated line + label ===== */
+/* ===== Two separate systems ===== */
+
+.contact-info-system {
+  width: 100%;
+}
+
+.contact-architect-system {
+  width: 100%;
+  display: grid;
+  grid-template-columns: minmax(160px, 1fr) minmax(160px, 1fr);
+  grid-template-areas:
+    "map   map"
+    "left  right";
+  gap: 1rem 0;
+  align-items: start;
+}
+
+/* ===== Map ===== */
+
+.contact-map {
+  grid-area: map;
+  position: relative;
+  width: 100%;
+  max-width: min(90vw, 400px);
+  aspect-ratio: 16 / 9;
+  justify-self: center;
+}
+
+.contact-map__picture,
+.contact-map__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.contact-map__img {
+  object-fit: cover;
+  position: relative;
+  z-index: 1;
+}
+
+/* ===== Overlay line + label ===== */
+
 .contact-overlay {
   position: absolute;
   inset: 0;
@@ -82,15 +118,7 @@ body.page-template-page-contact .contact-page {
   }
 }
 
-/* ===== Map block ===== */
-.contact-map {
-  grid-area: map;
-  position: relative;
-  width: 100%;
-  max-width: min(90vw, 400px);
-  aspect-ratio: 16 / 9;
-  justify-self: center;
-}
+/* ===== Map dots ===== */
 
 .map-dot {
   --size: 5px;
@@ -105,41 +133,44 @@ body.page-template-page-contact .contact-page {
   z-index: 2;
 }
 
-.contact-map__img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  position: relative;
-  z-index: 1;
-}
+/* ===== Text ===== */
 
-/* ===== Studio details ===== */
-.studio-details {
-  grid-area: details;
-  width: 100%;
-  justify-self: start;
-  align-self: start;
-  text-align: left;
+.studio-details,
+.founders-label,
+.architect-card {
   color: var(--contact-grey);
-  margin-bottom: 0;
 }
 
 .studio-details__name,
 .studio-details__sector,
 .studio-details__location,
-.studio-details__email {
+.studio-details__email,
+.founders-label,
+.architect-name,
+.architect-role,
+.architect-phone,
+.architect-email,
+.architect-cv {
   display: block;
   font-size: 0.8rem;
   line-height: 0.8rem;
-  margin-top: 0.25rem;
   text-decoration: none;
   color: var(--contact-grey);
 }
 
-.studio-details__name {
+.studio-details__name,
+.founders-label,
+.architect-name {
   font-weight: bold;
-  margin-top: 0;
+}
+
+.studio-details__sector,
+.studio-details__location,
+.architect-role,
+.architect-phone,
+.architect-email,
+.architect-cv {
+  margin-top: 0.25rem;
 }
 
 .studio-details__sectors {
@@ -150,43 +181,31 @@ body.page-template-page-contact .contact-page {
   margin-top: 0.75rem;
 }
 
-.studio-details__email {
-  margin-top: 0;
-}
-
-.studio-details__email:hover {
+.studio-details__email:hover,
+.architect-cv:hover {
   text-decoration: underline;
 }
 
-/* ===== Founders label ===== */
 .founders-label {
-  grid-area: founders;
-  width: 100%;
-  justify-self: start;
-  align-self: end;
-  text-align: left;
-  color: var(--contact-grey);
-  font-size: 0.8rem;
-  line-height: 0.8rem;
-  font-weight: bold;
-  margin: 0.25rem 0 0;
+  margin-top: 2.25rem;
 }
 
-/* ===== Architect cards ===== */
 .architect-card[data-architect="left"] {
   grid-area: left;
+  justify-self: start;
   text-align: left;
-  margin-top: 0;
 }
 
 .architect-card[data-architect="right"] {
   grid-area: right;
+  justify-self: end;
   text-align: right;
-  margin-top: 0;
 }
 
 .architect-head {
   display: inline-block;
+  text-decoration: none;
+  color: inherit;
   cursor: pointer;
 }
 
@@ -194,25 +213,7 @@ body.page-template-page-contact .contact-page {
   background: none;
   border: 0;
   padding: 0;
-  font-size: 0.82rem;
-  font-weight: bold;
-  line-height: 0.82rem;
-  text-decoration: none;
-  position: relative;
   cursor: pointer;
-  color: var(--contact-grey);
-}
-
-.architect-role,
-.architect-phone,
-.architect-email,
-.architect-cv {
-  display: block;
-  font-size: 0.8rem;
-  line-height: 0.8rem;
-  margin-top: 0.25rem;
-  text-decoration: none;
-  color: var(--contact-grey);
 }
 
 .architect-role {
@@ -225,18 +226,12 @@ body.page-template-page-contact .contact-page {
   opacity: 0.9;
 }
 
-.architect-cv {
-  text-decoration: none;
-}
-
-.architect-cv:hover {
-  text-decoration: underline;
-}
-
 .architect-phone,
 .architect-cv {
   margin-top: 1rem;
 }
+
+/* ===== Copy tooltip ===== */
 
 .js-copy {
   position: relative;
@@ -262,59 +257,164 @@ body.page-template-page-contact .contact-page {
   opacity: 1;
 }
 
-/* ===== Desktop adjustments ===== */
-@media (min-width: 900px) {
+/* ===== Mobile fit ===== */
+
+@media (max-width: 899px) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+
   body.page-template-page-contact .contact-page {
-    min-height: 100svh;
-    padding-bottom: var(--footer-h-desktop);
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    height: calc(100dvh - var(--footer-h-mobile));
+    min-height: auto;
+    padding-bottom: 0;
+    overflow: clip;
   }
 
   .contact-layout {
-    width: min(1480px, 100%);
-    padding: 0 2rem;
-    margin: 0 auto;
+    padding: 0 0.6rem 6rem;
+  }
 
-    grid-template-columns: 1fr minmax(520px, 960px) 1fr;
-    grid-template-areas:
-      "details  .    ."
-      "founders .    ."
-      "left     map  right";
-    align-items: start;
-
-    column-gap: 2.5rem;
-    row-gap: 0;
+  .contact-info-system {
+    justify-self: start;
+    padding-inline: 1.6rem;
   }
 
   .contact-map {
-    max-width: 960px;
+    max-width: 100%;
+    padding-top: 1rem;
+  }
+
+  .founders-label {
+    display: none;
+  }
+
+  .architect-card[data-architect="left"],
+  .architect-card[data-architect="right"] {
+    margin-top: 2.5rem;
+    padding-inline: 1.6rem;
+  }
+
+  .copy-tip {
+    padding: 3px 9px;
+    font-size: 10px;
+  }
+  .contact-overlay,
+  .contact-label,
+  .map-dot {
+    display: none !important;
+  }
+}
+
+/* ===== Tablet-ish mobile ===== */
+
+@media (min-width: 768px) and (max-width: 899px) {
+  .contact-layout {
+    padding-inline: 2rem;
+  }
+
+  .contact-map {
+    max-width: 500px;
+  }
+}
+
+/* ===== Desktop ===== */
+@media (min-width: 900px) {
+  body.page-template-page-contact .contact-page {
+    height: calc(100svh - var(--footer-h-desktop));
+    min-height: auto;
+    padding-bottom: 0;
+    overflow: hidden;
+  }
+
+  .contact-layout {
+    height: 100%;
+    padding-inline: var(--site-side-inset);
+
+    display: grid;
+    grid-template-rows: auto 1fr;
+    row-gap: 0;
+
+    align-items: stretch;
+  }
+
+  /* top independent system */
+  .contact-info-system {
+    justify-self: start;
+    width: 260px;
+    margin-left: var(--footer-contact-end-offset);
+    padding-top: clamp(4rem, 11vh, 8rem);
+    z-index: 2;
+
+    transform: translateY(2rem);
+    /* background-color: lavender; */
+  }
+
+  .studio-details {
+    max-width: 260px;
+    margin: 0;
+  }
+
+  .founders-label {
+    margin-top: clamp(2.75rem, 6vh, 4.5rem);
+  }
+
+  /* lower independent system */
+  .contact-architect-system {
+    align-self: center;
+
+    width: 100%;
+    display: grid;
+
+    grid-template-columns:
+      minmax(180px, 1fr)
+      minmax(520px, 58vw)
+      minmax(180px, 1fr);
+
+    grid-template-areas: "left map right";
+    column-gap: clamp(1rem, 3vw, 3rem);
+    align-items: center;
+
+    transform: translateY(-10rem);
+  }
+
+  .contact-map {
+    grid-area: map;
     justify-self: center;
-    align-self: start;
-    margin-top: -13.8rem;
+    align-self: center;
+    width: 100%;
+    max-width: 100%;
   }
 
   .contact-map__img {
-    display: block;
-    width: 100%;
-    height: 100%;
     object-fit: contain;
-    position: relative;
-    z-index: 1;
-    margin-left: 0;
   }
 
   .architect-card[data-architect="left"] {
+    grid-area: left;
     justify-self: start;
     text-align: left;
-    margin-top: 0;
+    margin-left: var(--footer-contact-end-offset);
   }
 
   .architect-card[data-architect="right"] {
+    grid-area: right;
     justify-self: end;
     text-align: right;
-    margin-top: 0;
+    margin-right: var(--footer-projects-end-offset);
+  }
+
+  .architect-card {
+    margin: 0;
+    transform: none !important;
+  }
+
+  .architect-card[data-architect="left"],
+  .architect-card[data-architect="right"] {
+    align-self: center;
+    transform: translateY(1.75rem) !important;
   }
 
   .architect-name {
@@ -325,7 +425,12 @@ body.page-template-page-contact .contact-page {
   .architect-role,
   .architect-phone,
   .architect-email,
-  .architect-cv {
+  .architect-cv,
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email,
+  .founders-label {
     font-size: 0.95rem;
     line-height: 0.95rem;
   }
@@ -335,42 +440,21 @@ body.page-template-page-contact .contact-page {
     margin-top: 1.5rem;
   }
 
-  .studio-details__name,
-  .studio-details__sector,
-  .studio-details__location,
-  .studio-details__email {
-    font-size: 0.95rem;
-    line-height: 0.95rem;
-  }
-
   .studio-details__name {
     line-height: 1.3rem;
   }
-  
+
   .studio-details__email {
     margin-top: 0.25rem;
   }
-
-  .studio-details {
-    max-width: 260px;
-    justify-self: start;
-    align-self: start;
-    margin-top: 0rem;
-    margin-bottom: 0;
-  }
-
-  .founders-label {
-    font-size: 0.95rem;
-    line-height: 0.95rem;
-    margin: 4rem 0 4rem;
-  }
-
 
   .map-dot {
     --size: 6px;
     opacity: 0;
     transform: scale(0.7);
-    transition: opacity 0.18s ease, transform 0.18s ease;
+    transition:
+      opacity 0.18s ease,
+      transform 0.18s ease;
   }
 
   .contact-map.is-hot .map-dot {
@@ -394,487 +478,261 @@ body.page-template-page-contact .contact-page {
     display: block !important;
   }
 
-  .contact-label {
-    position: absolute;
-    pointer-events: none;
-    transition: opacity 0.2s;
-  }
-
   .contact-label__img {
-    display: block;
     max-width: 22px;
     padding-bottom: 5px;
-    height: auto;
   }
 }
 
-/* ===== Mobile fit: no page scrollbar, content fits between header & fixed footer ===== */
-@media (max-width: 899px) {
-  html,
-  body {
-    height: 100%;
-    overflow: hidden;
-  }
-
-  body.page-template-page-contact .contact-page {
-    height: calc(100dvh - var(--footer-h-mobile));
-    min-height: auto;
-    padding-bottom: 0;
-    align-items: center;
-    justify-content: center;
-    overflow: clip;
-  }
-
-  .contact-layout {
-    width: 100%;
-    margin-inline: auto;
-    padding: 0 0 5rem;
-    grid-template-areas:
-      "details ."
-      "map     map"
-      "left    right";
-  }
-
-  .studio-details {
-    width: 100%;
-    max-width: 180px;
-    justify-self: start;
-    text-align: left;
-    margin-bottom: 0.5rem;
-    padding-left: 1.6rem;
-  }
-
-  .studio-details__sectors {
-      margin-top: 0.45rem;
-  }
-  .studio-details__email {
-      margin-top: 0.25rem;
-  }
-
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-top: 2.3rem;
-    padding-left: 1.6rem;
-  }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-top: 2.3rem;
-    padding-right: 1.6rem;
-  }
-
+/* Small desktop / tablet landscape fixes */
+@media (min-width: 900px) and (max-width: 1099px) {
+  .architect-role,
+  .architect-phone,
+  .architect-email,
+  .architect-cv,
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email,
   .founders-label {
-    display: none;
+    font-size: 0.75rem;
+    line-height: 0.85rem;
+  }
+  .architect-name {
+    font-size: 0.78rem;
+    line-height: 0.88rem;
+  }
+  .contact-info-system {
+    padding-top: clamp(2rem, 5vh, 3.5rem);
+    transform: translateY(2rem);
+    /* background-color: orange; */
   }
 
-  .contact-layout > *:last-child {
-    margin-bottom: 0 !important;
-    padding-bottom: 0 !important;
+  .contact-architect-system {
+    grid-template-columns:
+      minmax(150px, 1fr)
+      minmax(420px, 56vw)
+      minmax(150px, 1fr);
+
+    transform: translateY(-6rem);
   }
 
-  .contact-overlay,
-  .contact-label,
-  .map-dot {
-    display: none !important;
+  .architect-card[data-architect="left"],
+  .architect-card[data-architect="right"] {
+    transform: translateY(2.15rem) !important;
   }
 
   .contact-map {
     max-width: 100%;
-    padding-inline: 0.8rem
-  }
-
-  .copy-tip {
-    position: absolute;
-    left: 50%;
-    bottom: 40%;
-    padding: 3px 9px;
-    background-color: #f9f9f9;
-    color: #111;
-    font-size: 10px;
-    border: 1px solid #ccc;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity 0.15s ease;
   }
 }
 
-/* Very short screens */
-@media (max-width: 899px) and (max-height: 700px) {
-  body.page-template-page-contact .contact-page {
-    height: calc(100dvh - var(--footer-h-mobile));
-    min-height: auto;
-    padding-bottom: 0;
-    padding-top: 10vh;
-    align-items: flex-start;
-    justify-content: center;
-    overflow: hidden;
-  }
-
-  .contact-layout {
-    gap: 0.6rem 0;
-    padding: 0 0 4rem;
-  }
-
-  .contact-map {
-    max-width: min(88vw, 100%);
-    padding-inline: 0;
-  }
-
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-top: 2rem;
-  }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-top: 2rem;
-  }
-
+@media (min-width: 1100px) and (max-width: 1399px) {
+  .architect-role,
+  .architect-phone,
+  .architect-email,
+  .architect-cv,
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email,
   .founders-label {
-    display: none;
+    font-size: 0.75rem;
+    line-height: 0.85rem;
   }
-}
-
-@media (min-width: 768px) and (max-width: 899px) {
-  .contact-layout {
-    width: 100%;
-    margin-inline: auto;
-    padding: 0 2rem 5rem;
-    grid-template-areas:
-      "details ."
-      "map     map"
-      "left    right";
+  .architect-name {
+    font-size: 0.78rem;
+    line-height: 0.88rem;
   }
-
-  .contact-map {
-    max-width: 500px;
-    padding-inline: 0.8rem
+  .contact-architect-system {
+    transform: translateY(-5rem);
   }
-}
-
-
-/* ===== Small laptops / big tablets ===== */
-@media (min-width: 900px) and (max-width: 999px) {
-  .contact-layout {
-    grid-template-columns:
-      minmax(200px, 1fr)
-      minmax(360px, 680px)
-      minmax(200px, 1fr);
-
-    column-gap: 0.8rem;
-    padding: 0 0.8rem;
+  .contact-info-system {
+    transform: translateY(3rem);
+    /* background-color: pink; */
   }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -5rem;
-  }
-}
-
-/* ===== Small laptops / big tablets ===== */
-@media (min-width: 1000px) and (max-width: 1099px) {
-  .contact-layout {
-    grid-template-columns:
-      minmax(180px, 1fr)
-      minmax(400px, 700px)
-      minmax(180px, 1fr);
-    column-gap: 1.5rem;
-    padding: 0 2rem;
-  }
-
-  .contact-map {
-    margin-top: -8rem;
-    max-width: 100%;
-    margin-top: -7rem;
-  }
-}
-
-@media (min-width: 1100px) and (max-width: 1199px) {
-  .contact-layout {
-    grid-template-columns:
-      200px
-      minmax(560px, 920px)
-      200px;
-    column-gap: 1.5rem;
-    padding-inline: var(--site-side-inset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -8rem;
-  }
-}
-
-@media (min-width: 1200px) and (max-width: 1299px) {
-  .contact-layout {
-    grid-template-columns:
-      220px
-      minmax(560px, 920px)
-      220px;
-    column-gap: 1.5rem;
-    padding-inline: var(--site-side-inset);
-  }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
-  }
-
+  .architect-card[data-architect="left"],
   .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -10.2rem;
+    transform: translateY(1.7rem) !important;
   }
 }
 
-@media (min-width: 1300px) and (max-width: 1499px) {
-  .contact-layout {
-    grid-template-columns:
-      240px
-      minmax(640px, 1040px)
-      240px;
-
-    column-gap: 2rem;
-    padding-inline: var(--site-side-inset);
+@media (min-width: 1400px) and (max-width: 1599px) {
+  .architect-role,
+  .architect-phone,
+  .architect-email,
+  .architect-cv,
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email,
+  .founders-label {
+    font-size: 0.85rem;
+    line-height: 0.95rem;
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    margin-left: var(--footer-contact-end-offset);
+  .architect-name {
+    font-size: 0.88rem;
+    line-height: 0.98rem;
   }
-
-  .architect-card[data-architect="right"] {
-    margin-right: var(--footer-projects-end-offset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -12rem;
+  /* standard laptop tuning */
+  .contact-info-system {
+    transform: translateY(3rem);
+    /* background-color: yellow; */
   }
 }
 
-@media (min-width: 1500px) and (max-width: 1799px) {
-  .contact-layout {
-    grid-template-columns:
-      250px
-      minmax(720px, 1200px)
-      250px;
-
-    column-gap: 2.5rem;
-    padding-inline: var(--site-side-inset);
+@media (min-width: 1600px) and (max-width: 1699px) {
+  /* standard laptop tuning */
+  .contact-info-system {
+    transform: translateY(4rem);
+    /* background-color: powderblue; */
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    margin-left: var(--footer-contact-end-offset);
+  .contact-architect-system {
+    transform: translateY(-9rem);
   }
+}
 
-  .architect-card[data-architect="right"] {
-    margin-right: var(--footer-projects-end-offset);
+@media (min-width: 1700px) and (max-width: 1799px) {
+  /* standard laptop tuning */
+  .contact-info-system {
+    transform: translateY(6rem);
+    /* background-color: greenyellow; */
   }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -12.5rem;
+  .contact-architect-system {
+    transform: translateY(-9rem);
   }
 }
 
 @media (min-width: 1800px) and (max-width: 1899px) {
-  .contact-layout {
-    width: 100%;
-    max-width: none;
-    padding-inline: var(--site-side-inset);
-
-    grid-template-columns:
-      260px
-      minmax(1000px, 1fr)
-      260px;
-
-    column-gap: 2.5rem;
-    transform: translateY(2rem);
+  .contact-info-system {
+    transform: translateY(5rem);
+    
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
-  }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -16.5rem;
+  .contact-architect-system {
+    transform: translateY(-10rem);
   }
 }
 
 @media (min-width: 1900px) and (max-width: 1999px) {
-  .contact-layout {
-    width: 100%;
-    max-width: none;
-    padding-inline: var(--site-side-inset);
-
-    grid-template-columns:
-      280px
-      minmax(1050px, 1fr)
-      280px;
-
-    column-gap: 2.75rem;
-    transform: translateY(2.5rem);
+  .contact-info-system {
+    transform: translateY(5.5rem);
+    
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
+  .contact-architect-system {
+    transform: translateY(-11rem);
   }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
+}
+@media (min-width: 2000px) and (max-width: 2299px) {
+  .contact-info-system {
+    transform: translateY(7rem);
   }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -17.5rem;
+  .contact-architect-system {
+    transform: translateY(-11rem);
   }
 }
 
-@media (min-width: 2000px) and (max-width: 2199px) {
-  .contact-layout {
-    width: 100%;
-    max-width: none;
-    padding-inline: var(--site-side-inset);
-
-    grid-template-columns:
-      280px
-      minmax(1100px, 1fr)
-      280px;
-
-    column-gap: 2.75rem;
+@media (min-width: 2300px) and (max-width: 2499px) {
+  .contact-info-system {
+    transform: translateY(8rem);
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
-  }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -17rem;
+  .contact-architect-system {
+    transform: translateY(-11rem);
   }
 }
 
-@media (min-width: 2200px) and (max-width: 2599px) {
-  .contact-layout {
-    width: 100%;
-    padding-inline: var(--site-side-inset);
-
-    grid-template-columns:
-      320px
-      minmax(1200px, 1fr)
-      320px;
-
-    column-gap: 3rem;
+@media (min-width: 2500px) and (max-width: 2799px) {
+  .contact-info-system {
+    transform: translateY(8.5rem);
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
-  }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -21rem;
+  .contact-architect-system {
+    transform: translateY(-11rem);
   }
 }
 
-@media (min-width: 2600px) and (max-width: 3199px) {
-  .contact-layout {
-    width: 100%;
-    padding-inline: var(--site-side-inset);
-
-    grid-template-columns:
-      360px
-      minmax(1400px, 1fr)
-      360px;
-
-    column-gap: 3.5rem;
+@media (min-width: 2800px) and (max-width: 2999px) {
+  .contact-info-system {
+    transform: translateY(9rem);
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
-  }
-
-  .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
-  }
-
-  .contact-map {
-    max-width: 100%;
-    margin-top: -22rem;
+  .contact-architect-system {
+    transform: translateY(-11rem);
   }
 }
 
-@media (min-width: 3200px) {
-  .contact-layout {
-    width: 100%;
-    padding-inline: var(--site-side-inset);
-
-    grid-template-columns:
-      400px
-      minmax(1500px, 1800px)
-      400px;
-
-    column-gap: 4rem;
+@media (min-width: 3000px) {
+  .contact-info-system {
+    transform: translateY(10rem);
+    /* background-color: gold; */
   }
-
-  .studio-details,
-  .founders-label,
-  .architect-card[data-architect="left"] {
-    justify-self: start;
-    margin-left: var(--footer-contact-end-offset);
+  .contact-architect-system {
+    transform: translateY(-12rem);
   }
+}
 
+@media (min-width: 2000px) {
+  .architect-role,
+  .architect-phone,
+  .architect-email,
+  .architect-cv,
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email,
+  .founders-label {
+    font-size: 1.1rem;
+    line-height: 1.3rem;
+  }
+  .architect-name {
+    font-size: 1.15rem;
+    line-height: 1.3rem;
+  }
+}
+
+@media only screen and (max-width: 375px) and (max-height: 667px) {
+  body.page-template-page-contact .contact-page {
+    align-items: flex-start;
+    padding-top: 2.5rem;
+    box-sizing: border-box;
+  }
+   .contact-layout {
+    padding: 0 0.6rem 5rem;
+  }
+  .architect-card[data-architect="left"],
   .architect-card[data-architect="right"] {
-    justify-self: end;
-    margin-right: var(--footer-projects-end-offset);
+    margin-top: 0.8rem;
+    padding-bottom: 1.2rem;
   }
+}
 
-  .contact-map {
-    max-width: 1800px; /* 👈 important cap */
-    margin-top: -23rem;
+@media (min-width: 768px) and (max-width: 1366px) {
+  .architect-role,
+  .architect-phone,
+  .architect-email,
+  .architect-cv,
+  .studio-details__name,
+  .studio-details__sector,
+  .studio-details__location,
+  .studio-details__email,
+  .founders-label {
+    font-size: 0.70rem;
+    line-height: 0.75rem;
+  }
+  .architect-name {
+    font-size: 0.75rem;
+    line-height: 0.80rem;
+  }
+  .contact-info-system {
+    transform: translateY(0.5rem);
+  }
+  .contact-architect-system {
+    column-gap: 0.1rem;
+    transform: translateY(-8.5rem);
+  }
+}
+
+@media (max-width: 1366px) {
+  .contact-overlay,
+  .contact-label,
+  .map-dot {
+    display: none !important;
   }
 }

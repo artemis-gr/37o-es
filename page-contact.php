@@ -120,135 +120,135 @@ $a2 = [
 
 <main id="site-content" role="main" class="contact-page">
   <section class="contact-layout">
-
-    <div class="studio-details">
-      <?php if ($studio['name']) : ?>
-        <div class="studio-details__name">
-          <?php echo esc_html($studio['name']); ?>
-        </div>
-      <?php endif; ?>
-
-      <?php if (!empty($studio_sectors)) : ?>
-        <div class="studio-details__sectors">
-          <?php foreach ($studio_sectors as $sector) : ?>
-            <div class="studio-details__sector"><?php echo esc_html($sector); ?></div>
-          <?php endforeach; ?>
-        </div>
-      <?php endif; ?>
-
-      <?php if ($studio['location']) : ?>
-        <div class="studio-details__location">
-          <?php echo esc_html($studio['location']); ?>
-        </div>
-      <?php endif; ?>
-
-      <?php if ($studio['email']) : ?>
-        <a class="studio-details__email"
-           href="mailto:<?php echo esc_attr(antispambot($studio['email'])); ?>">
-          <?php echo esc_html(antispambot($studio['email'])); ?>
-        </a>
-      <?php endif; ?>
-    </div>
-
-    <?php if ($studio['heading']) : ?>
-      <div class="founders-label">
-        <?php echo esc_html($studio['heading']); ?>
-      </div>
-    <?php endif; ?>
-
-    <!-- Architect 1 (left) -->
-    <div class="architect-card" data-architect="left">
-      <div class="architect-head js-arch-trigger" data-target="left" role="button" tabindex="0">
-        <a class="architect-name"
-           href="<?php echo esc_url($a1['cv']); ?>"
-           target="_blank" rel="noopener">
-          <?php echo esc_html($a1['name']); ?>
-        </a>
-        <div class="architect-role"><?php echo esc_html($a1['role']); ?></div>
-      </div>
-
-      <?php if ($a1['phone1']) : ?>
-        <a
-          class="architect-phone js-copy"
-          data-copy="<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>"
-          href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>">
-          <?php echo esc_html($a1['phone1']); ?>
-        </a>
-      <?php endif; ?>
-
-      <a
-        class="architect-email js-copy"
-        data-copy="<?php echo esc_attr($a1['email']); ?>"
-        href="mailto:<?php echo esc_attr($a1['email']); ?>">
-        <?php echo esc_html($a1['email']); ?>
-      </a>
-
-      <a class="architect-cv" href="<?php echo esc_url($a1['cv']); ?>" target="_blank" rel="noopener">CV</a>
-    </div>
-
-    <!-- Center map -->
-    <div class="contact-map"
-      data-dot1-x="<?php echo esc_attr($dot1['x']); ?>"
-      data-dot1-y="<?php echo esc_attr($dot1['y']); ?>"
-      data-dot2-x="<?php echo esc_attr($dot2['x']); ?>"
-      data-dot2-y="<?php echo esc_attr($dot2['y']); ?>"
-      <?php if ($dot1_label_src): ?>data-dot1-label-src="<?php echo esc_url($dot1_label_src); ?>"<?php endif; ?>
-      <?php if ($dot1_label_alt): ?>data-dot1-label-alt="<?php echo esc_attr($dot1_label_alt); ?>"<?php endif; ?>
-      <?php if ($dot2_label_src): ?>data-dot2-label-src="<?php echo esc_url($dot2_label_src); ?>"<?php endif; ?>
-      <?php if ($dot2_label_alt): ?>data-dot2-label-alt="<?php echo esc_attr($dot2_label_alt); ?>"<?php endif; ?>
-    >
-      <picture class="contact-map__picture">
-        <?php if ($map_gif_mobile_url): ?>
-          <source media="(max-width: 899px)" srcset="<?php echo esc_url($map_gif_mobile_url); ?>" data-no-lazy="1" />
+    <div class="contact-info-system">
+      <div class="studio-details">
+        <?php if ($studio['name']) : ?>
+          <div class="studio-details__name"><?php echo esc_html($studio['name']); ?></div>
         <?php endif; ?>
 
-        <img
-          class="contact-map__img no-lazyload"
-          src="<?php echo esc_url($map_img); ?>"
-          alt="Studio map"
-          decoding="async"
-          loading="eager"
-          data-no-lazy="1"
-        />
-      </picture>
+        <?php if (!empty($studio_sectors)) : ?>
+          <div class="studio-details__sectors">
+            <?php foreach ($studio_sectors as $sector) : ?>
+              <div class="studio-details__sector"><?php echo esc_html($sector); ?></div>
+            <?php endforeach; ?>
+          </div>
+        <?php endif; ?>
 
-      <span class="map-dot map-dot--1" style="--x:<?php echo esc_attr($dot1['x']); ?>%; --y:<?php echo esc_attr($dot1['y']); ?>%;"></span>
-      <span class="map-dot map-dot--2" style="--x:<?php echo esc_attr($dot2['x']); ?>%; --y:<?php echo esc_attr($dot2['y']); ?>%;"></span>
-    </div>
+        <?php if ($studio['location']) : ?>
+          <div class="studio-details__location"><?php echo esc_html($studio['location']); ?></div>
+        <?php endif; ?>
 
-    <!-- Architect 2 (right) -->
-    <div class="architect-card" data-architect="right">
-      <div class="architect-head js-arch-trigger" data-target="right" role="button" tabindex="0">
-        <a class="architect-name"
-           href="<?php echo esc_url($a2['cv']); ?>"
-           target="_blank" rel="noopener">
-          <?php echo esc_html($a2['name']); ?>
-        </a>
-        <div class="architect-role"><?php echo esc_html($a2['role']); ?></div>
+        <?php if ($studio['email']) : ?>
+          <a class="studio-details__email" href="mailto:<?php echo esc_attr(antispambot($studio['email'])); ?>">
+            <?php echo esc_html(antispambot($studio['email'])); ?>
+          </a>
+        <?php endif; ?>
       </div>
 
-      <?php if ($a2['phone1']) : ?>
-        <a
-          class="architect-phone js-copy"
-          data-copy="<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>"
-          href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>">
-          <?php echo esc_html($a2['phone1']); ?>
-        </a>
+      <?php if ($studio['heading']) : ?>
+        <div class="founders-label"><?php echo esc_html($studio['heading']); ?></div>
       <?php endif; ?>
+    </div>
 
-      <a
-        class="architect-email js-copy"
-        data-copy="<?php echo esc_attr($a2['email']); ?>"
-        href="mailto:<?php echo esc_attr($a2['email']); ?>">
-        <?php echo esc_html($a2['email']); ?>
-      </a>
+    <div class="contact-architect-system">
 
-      <a class="architect-cv" href="<?php echo esc_url($a2['cv']); ?>" target="_blank" rel="noopener">CV</a>
+      <div class="architect-card" data-architect="left">
+        <a class="architect-head js-arch-trigger"
+          href="<?php echo esc_url($a1['cv']); ?>"
+          target="_blank"
+          rel="noopener"
+          data-target="left">
+
+          <span class="architect-name">
+            <?php echo esc_html($a1['name']); ?>
+          </span>
+
+          <span class="architect-role">
+            <?php echo esc_html($a1['role']); ?>
+          </span>
+
+        </a>
+
+        <?php if ($a1['phone1']) : ?>
+          <a class="architect-phone js-copy"
+            data-copy="<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>"
+            href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a1['phone1'])); ?>">
+            <?php echo esc_html($a1['phone1']); ?>
+          </a>
+        <?php endif; ?>
+
+        <a class="architect-email js-copy" data-copy="<?php echo esc_attr($a1['email']); ?>" href="mailto:<?php echo esc_attr($a1['email']); ?>">
+          <?php echo esc_html($a1['email']); ?>
+        </a>
+
+        <a class="architect-cv" href="<?php echo esc_url($a1['cv']); ?>" target="_blank" rel="noopener">CV</a>
+      </div>
+
+      <div class="contact-map"
+        data-dot1-x="<?php echo esc_attr($dot1['x']); ?>"
+        data-dot1-y="<?php echo esc_attr($dot1['y']); ?>"
+        data-dot2-x="<?php echo esc_attr($dot2['x']); ?>"
+        data-dot2-y="<?php echo esc_attr($dot2['y']); ?>"
+        <?php if ($dot1_label_src): ?>data-dot1-label-src="<?php echo esc_url($dot1_label_src); ?>"<?php endif; ?>
+        <?php if ($dot1_label_alt): ?>data-dot1-label-alt="<?php echo esc_attr($dot1_label_alt); ?>"<?php endif; ?>
+        <?php if ($dot2_label_src): ?>data-dot2-label-src="<?php echo esc_url($dot2_label_src); ?>"<?php endif; ?>
+        <?php if ($dot2_label_alt): ?>data-dot2-label-alt="<?php echo esc_attr($dot2_label_alt); ?>"<?php endif; ?>
+      >
+        <picture class="contact-map__picture">
+          <?php if ($map_gif_mobile_url): ?>
+            <source media="(max-width: 1366px)" srcset="<?php echo esc_url($map_gif_mobile_url); ?>" data-no-lazy="1" />
+            <?php endif; ?>
+
+          <img class="contact-map__img no-lazyload"
+            src="<?php echo esc_url($map_img); ?>"
+            alt="Studio map"
+            decoding="async"
+            loading="eager"
+            data-no-lazy="1" />
+        </picture>
+
+        <span class="map-dot map-dot--1" style="--x:<?php echo esc_attr($dot1['x']); ?>%; --y:<?php echo esc_attr($dot1['y']); ?>%;"></span>
+        <span class="map-dot map-dot--2" style="--x:<?php echo esc_attr($dot2['x']); ?>%; --y:<?php echo esc_attr($dot2['y']); ?>%;"></span>
+      </div>
+
+      <div class="architect-card" data-architect="right">
+        <a class="architect-head js-arch-trigger"
+          href="<?php echo esc_url($a2['cv']); ?>"
+          target="_blank"
+          rel="noopener"
+          data-target="right">
+
+          <span class="architect-name">
+            <?php echo esc_html($a2['name']); ?>
+          </span>
+
+          <span class="architect-role">
+            <?php echo esc_html($a2['role']); ?>
+          </span>
+
+        </a>
+
+        <?php if ($a2['phone1']) : ?>
+          <a class="architect-phone js-copy"
+            data-copy="<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>"
+            href="tel:<?php echo esc_attr(preg_replace('/\s+/', '', $a2['phone1'])); ?>">
+            <?php echo esc_html($a2['phone1']); ?>
+          </a>
+        <?php endif; ?>
+
+        <a class="architect-email js-copy" data-copy="<?php echo esc_attr($a2['email']); ?>" href="mailto:<?php echo esc_attr($a2['email']); ?>">
+          <?php echo esc_html($a2['email']); ?>
+        </a>
+
+        <a class="architect-cv" href="<?php echo esc_url($a2['cv']); ?>" target="_blank" rel="noopener">CV</a>
+      </div>
+
     </div>
 
     <svg class="contact-overlay" aria-hidden="true" focusable="false" preserveAspectRatio="none">
       <line class="contact-line" x1="0" y1="0" x2="0" y2="0" />
     </svg>
+
     <div class="contact-label" aria-hidden="true"></div>
 
   </section>

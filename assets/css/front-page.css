@@ -27,7 +27,11 @@
 
 /* Mobile */
 @media (max-width: 899px) {
-  html, body { height: 100%; overflow: hidden; }
+  html, body { 
+    height: 100%; 
+    overflow: hidden; 
+    background-color: rgb(198, 218, 229)!important;
+  }
 
   .front-hero {
     height: calc(100dvh - var(--footer-h-mobile));

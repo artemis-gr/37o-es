@@ -13,6 +13,7 @@
   ];
 
   registerBlockType('thirtyseven/two-image-gallery', {
+    apiVersion: 3,
     title: __('2-Image Gallery', '37o-es'),
     description: __('Exactly two images side-by-side (Left / Right).', '37o-es'),
     icon: 'images-alt2',

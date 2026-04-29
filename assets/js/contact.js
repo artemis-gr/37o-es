@@ -1,5 +1,5 @@
 (function () {
-  const mq = window.matchMedia("(min-width: 900px)");
+  const mq = window.matchMedia("(min-width: 1367px)");
   if (!mq.matches) return; // desktop-only
 
   const layout = document.querySelector(".contact-layout");
@@ -158,13 +158,6 @@
     const tStart = (startP.x - A.x) * ux + (startP.y - A.y) * uy;
     const tEnd = (endP.x - A.x) * ux + (endP.y - A.y) * uy;
 
-    console.log("which:", which);
-    console.log("A (dot1):", A);
-    console.log("B (dot2):", B);
-    console.log("startP:", startP);
-    console.log("endP:", endP);
-    console.log("tStart:", tStart, "tEnd:", tEnd);
-
     // Small inset so the line doesn't crash into the names
     const endPad = Math.max(140, R.layout.width * 0.12);
     const t2 = which === "left" ? tEnd - endPad : tEnd + endPad;
@@ -178,20 +171,30 @@
     );
     if (distance < 20) return;
 
-    // Use architect edge for X, but keep the line on the map-line Y
+    // Get the role element (the second line under the name)
+    const roleEl = activeName
+      .closest(".architect-head")
+      ?.querySelector(".architect-role");
+
+    if (!roleEl) return;
+
+    const roleRect = roleEl.getBoundingClientRect();
+
+    // 👇 THIS is your new vertical anchor
+    const offset = Math.max(6, R.layout.width * 0.003);
+    const yLine = roleRect.bottom - R.layout.top + offset;
+
+    // Use architect edge for X, but role-based Y
     const x1 = startP.x;
-    const y1 = A.y;
+    const y1 = yLine;
 
     const x2 = projectedEndX;
-    const y2 = A.y;
+    const y2 = yLine;
 
     const dash = Math.hypot(x2 - x1, y2 - y1);
     setLineAttrs(x1, y1, x2, y2);
     line.style.strokeDasharray = `${dash} ${dash}`;
     line.style.transition = "none";
-
-    console.log("line start:", { x1, y1 });
-    console.log("line end:", { x2, y2 });
 
     // Always reveal from x1 -> x2
     line.style.strokeDashoffset = dash;
@@ -277,18 +280,25 @@
 
   // events
   const triggers = document.querySelectorAll(".js-arch-trigger");
+
   function onEnter(e) {
     show(e.currentTarget.dataset.target);
   }
+
   function onLeave() {
     hide();
   }
+
   triggers.forEach((t) => {
     t.addEventListener("mouseenter", onEnter);
     t.addEventListener("focus", onEnter);
     t.addEventListener("mouseleave", onLeave);
     t.addEventListener("blur", onLeave);
-    t.addEventListener("click", onEnter);
+  });
+
+  // Reset line when coming back from CV page (Safari cache etc)
+  window.addEventListener("pageshow", () => {
+    hide();
   });
 
   // keep alignment crisp on resize

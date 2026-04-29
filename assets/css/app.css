@@ -6,8 +6,10 @@
 *::after { box-sizing: border-box; }
 
 html, body { 
-  height: 100%; 
   font-family: 'GeorgiaCustom', serif;
+  height: 100%;
+  margin: 0;
+  overflow-x: hidden;
 }
 
 main {
@@ -16,14 +18,15 @@ main {
 }
 
 body {
-  min-height: 100vh;
+  margin: 0;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  margin: 0;
 }
 
 #site-content {        
-  flex: 1 0 auto;      /* fill leftover space between header (none) and footer */
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 /* Footer stays at the end of the column */

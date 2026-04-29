@@ -1,21 +1,27 @@
 .footer-inner {
-  /* use inner padding so total height stays the token value */
   height: 100%;
   padding-block: 0.6rem;
   padding-inline: var(--site-side-inset);
-  display: flex;              /* keep your existing layout */
+
+  display: flex;
   align-items: center;
-  justify-content: space-around;
-  gap: 20px;
+  justify-content: space-between; /* 👈 important */
   position: relative;
   background: transparent;
 }
 
+.footer-logo {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
 .footer-logo img {
   display: block;
-  width: 80px;
+  width: 55px;
   height: auto;
   max-width: 100%;
+  margin-left: 10.5px;
 }
 
 .footer-link {
@@ -92,6 +98,7 @@
   }
 
   .footer-logo img {
-    width: 100px;                   
+    width: 75px;    
+    margin-left: 0;               
   }
 }

@@ -61,6 +61,15 @@ if ($project_date) {
 
   <article class="project-content">
     <?php the_content(); ?>
+    <div class="back-to-top-container">
+      <svg class="top-arrow" xmlns="http://www.w3.org/2000/svg" width="50" height="14" fill="none" stroke="black" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 50 14">
+        <line x1="10" y1="12" x2="25" y2="2"></line>
+        <line x1="40" y1="12" x2="25" y2="2"></line>
+      </svg>
+    </div>
+    <div class="project-copyright">
+      37° Architecture Studio © <?php echo date('Y'); ?>
+    </div>
   </article>
 </main>
 <?php get_footer(); ?>

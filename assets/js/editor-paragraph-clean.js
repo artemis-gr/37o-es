@@ -44,7 +44,7 @@
 
     // Remove Bold/Italic formats globally (safe in your setup)
     //try { wp.richText.unregisterFormatType('core/bold'); } catch(e){}
-    try { wp.richText.unregisterFormatType('core/italic'); } catch(e){}
+    //try { wp.richText.unregisterFormatType('core/italic'); } catch(e){}
 
     // Optional CSS fallback: hide stray alignment UI (left/right/justify)
     const style = document.createElement('style');
