@@ -4,23 +4,29 @@
 
 /* Tune once */
 :root {
-  --page-gutter: 1.5rem;                    
-  --full-img-max: 1800px;                    
-  --footer-pad: calc(var(--footer-h-mobile, 72px) + env(safe-area-inset-bottom) + 24px);
-  --hdr: 0px;            
-  --ftr: 0px;           
-  --admin: 0px;          
+  --page-gutter: 1.5rem;
+  --full-img-max: 1800px;
+  --footer-pad: calc(
+    var(--footer-h-mobile, 72px) + env(safe-area-inset-bottom) + 24px
+  );
+  --hdr: 0px;
+  --ftr: 0px;
+  --admin: 0px;
   --gap-small: 24px;
   --gap-medium: 64px;
   --img-large-scale: 0.86;
 }
 
-html { scroll-behavior: auto; }
+html {
+  scroll-behavior: auto;
+}
 
 /* Fixed footer only on single project */
 body.single-project .site-footer {
   position: fixed;
-  left: 0; right: 0; bottom: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 100;
 }
 
@@ -57,24 +63,39 @@ body.single-project .site-footer {
 }
 
 /* Stop last child margin from “eating” the spacer */
-.project-page .project-content > *:last-child { margin-bottom: 0 !important; }
+.project-page .project-content > *:last-child {
+  margin-bottom: 0 !important;
+}
 
 /* Slightly different runway on desktop (tweak if footer size differs) */
 @media (min-width: 900px) {
-  :root { --footer-pad-desktop: calc(var(--footer-h-desktop, 96px) + 24px); }
-  .project-page .project-content { padding-bottom: var(--footer-pad-desktop); }
-  .project-page .project-content > * { scroll-margin-bottom: var(--footer-pad-desktop); }
-  .project-page .project-content::after { height: var(--footer-pad-desktop); }
+  :root {
+    --footer-pad-desktop: calc(var(--footer-h-desktop, 96px) + 24px);
+  }
+  .project-page .project-content {
+    padding-bottom: var(--footer-pad-desktop);
+  }
+  .project-page .project-content > * {
+    scroll-margin-bottom: var(--footer-pad-desktop);
+  }
+  .project-page .project-content::after {
+    height: var(--footer-pad-desktop);
+  }
 }
 
 /* Optional: tame “rubber band” interactions a bit */
-html, body { overscroll-behavior-y: contain; }
+html,
+body {
+  overscroll-behavior-y: contain;
+}
 
 /* ==========================================================
    Hero: Title (left, sticky on desktop) + Meta (right)
    ========================================================== */
 
-.project-hero { position: relative; }
+.project-hero {
+  position: relative;
+}
 
 .project-title {
   font-family: "Noto Serif Display", GeorgiaCustom, Georgia, serif;
@@ -84,42 +105,84 @@ html, body { overscroll-behavior-y: contain; }
   letter-spacing: 0.4rem;
 }
 
-.project-hero__title-pin { position: relative; text-align: left; }
-.project-subtitle { margin: 0.25rem 0 0; font-style: italic; display: none; }
+.project-hero__title-pin {
+  position: relative;
+  text-align: left;
+}
+.project-subtitle {
+  margin: 0.25rem 0 0;
+  font-style: italic;
+  display: none;
+}
 
 .project-hero__meta-pin {
-  display: flex; gap: 0.75rem; flex-wrap: wrap;
-  justify-content: flex-end; margin-top: 0.75rem; color: #373737;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  margin-top: 0.75rem;
+  color: #373737;
 }
-.meta__item { opacity: 0.85; }
-.meta__label { font-weight: 700; margin-right: 0.25rem; }
-.meta__value { font-weight: 400; }
+.meta__item {
+  opacity: 0.85;
+}
+.meta__label {
+  font-weight: 700;
+  margin-right: 0.25rem;
+}
+.meta__value {
+  font-weight: 400;
+}
 
 /* Desktop sticky positions */
 @media (min-width: 900px) {
-  .project-page { 
-    padding-top: 4rem; 
+  .project-page {
+    padding-top: 4rem;
   }
   .project-hero__title-pin {
-    position: fixed; z-index: 101; top: 1.25rem; left: 2rem; right: auto;
-    text-align: left; pointer-events: none;
+    position: fixed;
+    z-index: 101;
+    top: 1.25rem;
+    left: 2rem;
+    right: auto;
+    text-align: left;
+    pointer-events: none;
   }
-  .project-title, .project-subtitle { pointer-events: auto; }
+  .project-title,
+  .project-subtitle {
+    pointer-events: auto;
+  }
   .project-hero__meta-pin {
-    position: fixed; z-index: 101; right: 3rem;
+    position: fixed;
+    z-index: 101;
+    right: 3rem;
     bottom: calc(var(--footer-h-desktop, 96px) / 2);
     transform: translateY(50%);
-    display: flex; gap: 1rem; align-items: baseline; justify-content: flex-end;
-    background: transparent; pointer-events: none; font-size: 0.8rem;
+    display: flex;
+    gap: 1rem;
+    align-items: baseline;
+    justify-content: flex-end;
+    background: transparent;
+    pointer-events: none;
+    font-size: 0.8rem;
   }
-  .project-hero__meta-pin .meta__item { pointer-events: auto; }
-  .meta__label { font-weight: 800; }
+  .project-hero__meta-pin .meta__item {
+    pointer-events: auto;
+  }
+  .meta__label {
+    font-weight: 800;
+  }
 }
 
 @media (max-width: 899px) {
   .project-hero__meta-pin {
-    display: flex; gap: 0.5rem; flex-wrap: wrap;
-    justify-content: flex-start; margin-top: 0.75rem; color: #373737; font-size: 0.85rem;
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 0.75rem;
+    color: #373737;
+    font-size: 0.85rem;
   }
 }
 
@@ -141,20 +204,32 @@ html, body { overscroll-behavior-y: contain; }
 }
 
 /* Width styles */
-.project-content p.is-style-proj-text-w-xsmall { width: 26%; max-width: 26%; }  /* 👈 NEW */
-.project-content p.is-style-proj-text-w-small  { width: 40%; max-width: 40%; }
-.project-content p.is-style-proj-text-w-medium { width: 50%; max-width: 50%; }
-.project-content p.is-style-proj-text-w-large  { width: 98%; max-width: 98%; }
+.project-content p.is-style-proj-text-w-xsmall {
+  width: 26%;
+  max-width: 26%;
+} /* 👈 NEW */
+.project-content p.is-style-proj-text-w-small {
+  width: 40%;
+  max-width: 40%;
+}
+.project-content p.is-style-proj-text-w-medium {
+  width: 50%;
+  max-width: 50%;
+}
+.project-content p.is-style-proj-text-w-large {
+  width: 98%;
+  max-width: 98%;
+}
 
 /* Font sizes (unchanged) */
-.project-content p.has-proj-normal-font-size { 
-  font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.35rem) !important; 
+.project-content p.has-proj-normal-font-size {
+  font-size: clamp(1.2rem, 1.1rem + 0.4vw, 1.35rem) !important;
   line-height: 1.55;
   font-weight: 400;
 }
 
-.project-content p.has-proj-small-font-size { 
-  font-size: 1rem !important; 
+.project-content p.has-proj-small-font-size {
+  font-size: 1rem !important;
   line-height: 1.3;
   font-weight: 400;
 }
@@ -189,8 +264,8 @@ html, body { overscroll-behavior-y: contain; }
 
 /* Mobile tweaks */
 @media (max-width: 899px) {
-  .project-content p { 
-    width: 100%; 
+  .project-content p {
+    width: 100%;
     max-width: none;
     text-align: justify;
     text-align-last: left;
@@ -209,23 +284,22 @@ html, body { overscroll-behavior-y: contain; }
   }
 }
 
-
 /* ==========================================================
    Images Small / Medium / Large only
    ========================================================== */
 
 /* Figure baseline: center the block and cap total width */
 .project-page .project-content .wp-block-image {
-  margin: 1.5rem auto;                 /* vertical rhythm + center */
-  max-width: min(92%, var(--full-img-max));  /* respect your global cap */
+  margin: 1.5rem auto; /* vertical rhythm + center */
+  max-width: min(92%, var(--full-img-max)); /* respect your global cap */
 }
 
 /* Let the styled figures escape the generic figure cap */
 .project-page .project-content .wp-block-image.is-style-proj-img-large,
 .project-page .project-content .wp-block-image.is-style-proj-img-medium,
 .project-page .project-content .wp-block-image.is-style-proj-img-small {
-  max-width: none;        /* remove the 92%/full-img cap on these styles */
-  width: auto;            /* let the img determine width within its own rules */
+  max-width: none; /* remove the 92%/full-img cap on these styles */
+  width: auto; /* let the img determine width within its own rules */
 }
 
 /* Image reset: never stretch; contain by default */
@@ -234,7 +308,7 @@ html, body { overscroll-behavior-y: contain; }
   height: auto;
   max-width: 100%;
   object-fit: contain;
-  margin-inline: auto;                 /* center the bitmap if narrower */
+  margin-inline: auto; /* center the bitmap if narrower */
 }
 
 /* Caption: smaller, centered */
@@ -269,7 +343,9 @@ html, body { overscroll-behavior-y: contain; }
   /* Large: fit viewport height minus bars (scaled), without forcing extra box height */
   .project-page .project-content .wp-block-image.is-style-proj-img-large img {
     height: auto !important;
-    max-height: calc((100vh - var(--hdr) - var(--ftr) - var(--admin)) * var(--img-large-scale));
+    max-height: calc(
+      (100vh - var(--hdr) - var(--ftr) - var(--admin)) * var(--img-large-scale)
+    );
     width: auto;
     max-width: min(100%, 1600px);
     object-fit: contain;
@@ -293,10 +369,10 @@ html, body { overscroll-behavior-y: contain; }
 @media (max-width: 991.98px) {
   .project-page .project-content .wp-block-image.is-style-proj-img-large img,
   .project-page .project-content .wp-block-image.is-style-proj-img-medium img,
-  .project-page .project-content .wp-block-image.is-style-proj-img-small  img {
+  .project-page .project-content .wp-block-image.is-style-proj-img-small img {
     max-width: 100%;
     height: auto;
-    width: 100%;      /* fill column in mobile */
+    width: 100%; /* fill column in mobile */
   }
 }
 
@@ -311,13 +387,23 @@ html, body { overscroll-behavior-y: contain; }
 }
 
 /* Spacer sizes (front end) */
-.wp-block-spacer.is-style-gap-small  { height: var(--gap-small)  !important; }
-.wp-block-spacer.is-style-gap-medium { height: var(--gap-medium) !important; }
-.wp-block-spacer:not([class*="is-style-"]) { height: var(--gap-small) !important; }
+.wp-block-spacer.is-style-gap-small {
+  height: var(--gap-small) !important;
+}
+.wp-block-spacer.is-style-gap-medium {
+  height: var(--gap-medium) !important;
+}
+.wp-block-spacer:not([class*="is-style-"]) {
+  height: var(--gap-small) !important;
+}
 
 @media (min-width: 900px) {
-  .wp-block-spacer.is-style-gap-small  { height: 40px !important; }
-  .wp-block-spacer.is-style-gap-medium { height: 96px !important; }
+  .wp-block-spacer.is-style-gap-small {
+    height: 40px !important;
+  }
+  .wp-block-spacer.is-style-gap-medium {
+    height: 96px !important;
+  }
 }
 
 /* ==========================================================
@@ -330,14 +416,22 @@ html, body { overscroll-behavior-y: contain; }
 
 /* Core uses a bunch of selectors; neutralize the “next sibling gets margin-top” pattern */
 .project-page .project-content > * + *,
-.project-page .project-content :where(.is-layout-flow, .is-layout-constrained) > * + *,
+.project-page
+  .project-content
+  :where(.is-layout-flow, .is-layout-constrained)
+  > *
+  + *,
 .wp-site-blocks .project-page .project-content > * + * {
   margin-block-start: 0 !important;
 }
 
 @media (min-width: 1440px) {
-  .project-page .project-content .wp-block-image { margin: 1rem auto; }
-  .project-content p { margin: 0.75rem auto 1.1rem; }
+  .project-page .project-content .wp-block-image {
+    margin: 1rem auto;
+  }
+  .project-content p {
+    margin: 0.75rem auto 1.1rem;
+  }
 }
 
 /* One source of truth for vertical spacing */
@@ -356,12 +450,18 @@ html, body { overscroll-behavior-y: contain; }
 }
 
 /* Figures & paragraphs don’t add their own vertical margins anymore */
-.project-page .project-content .wp-block-image { margin: 0 auto !important; }
-.project-content p { margin: 0 auto !important; }
+.project-page .project-content .wp-block-image {
+  margin: 0 auto !important;
+}
+.project-content p {
+  margin: 0 auto !important;
+}
 
 /* Optional: tighter on ultra-wide */
 @media (min-width: 1440px) {
-  .project-page .project-content { row-gap: 1rem; }
+  .project-page .project-content {
+    row-gap: 1rem;
+  }
 }
 
 /* =========================
@@ -369,9 +469,9 @@ html, body { overscroll-behavior-y: contain; }
    ========================= */
 
 /* Base (Medium) with vertical aspect as default */
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery{
-  --tile-w-base: 320px;  /* width at scale 1 */
-  --tile-scale: 1;       /* Medium */
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery {
+  --tile-w-base: 320px; /* width at scale 1 */
+  --tile-scale: 1; /* Medium */
   --gap: 1.5rem;
 
   /* default aspect = Vertical 2:3 (w:h) */
@@ -393,20 +493,21 @@ html, body { overscroll-behavior-y: contain; }
 }
 
 /* Aspect override when user picked Square in the editor */
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery.is-ar-square{
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery.is-ar-square {
   --ar-w: 1;
   --ar-h: 1;
 }
 
 /* Large style = scale up evenly (ratio preserved) */
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery.is-style-grid-large{
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery.is-style-grid-large {
   --tile-scale: 1.25; /* tweak */
 }
 
 /* Equal-size tiles */
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image{
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery
+  figure.wp-block-image {
   margin: 0 !important;
-  width:  var(--tile-w) !important;
+  width: var(--tile-w) !important;
   height: var(--tile-h) !important;
   display: grid;
   overflow: hidden;
@@ -415,8 +516,13 @@ html, body { overscroll-behavior-y: contain; }
 }
 
 /* Images fill tile and crop uniformly (no distortion, equal heights) */
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image > img,
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image > a > img{
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery
+  figure.wp-block-image
+  > img,
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery
+  figure.wp-block-image
+  > a
+  > img {
   width: 100% !important;
   height: 100% !important;
   max-width: none !important;
@@ -426,15 +532,19 @@ html, body { overscroll-behavior-y: contain; }
 }
 
 /* Ignore any global figure/img sizing rules inside this gallery */
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image[class*="is-style-proj-img-"] img,
-.two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image[class*="size-"] img{
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery
+  figure.wp-block-image[class*="is-style-proj-img-"]
+  img,
+.two-image-gallery.wp-block-thirtyseven-two-image-gallery
+  figure.wp-block-image[class*="size-"]
+  img {
   max-width: none !important;
   height: 100% !important;
 }
 
 /* Mobile: always 2 columns, no overflow, ratio preserved */
-@media (max-width: 899px){
-  .two-image-gallery.wp-block-thirtyseven-two-image-gallery{
+@media (max-width: 899px) {
+  .two-image-gallery.wp-block-thirtyseven-two-image-gallery {
     /* let the grid fit the viewport */
     width: 100%;
     max-width: none;
@@ -449,17 +559,25 @@ html, body { overscroll-behavior-y: contain; }
   }
 
   /* tiles scale with column width; keep chosen aspect (vertical or square) */
-  .two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image{
+  .two-image-gallery.wp-block-thirtyseven-two-image-gallery
+    figure.wp-block-image {
     width: auto !important;
     height: auto !important;
-    aspect-ratio: calc(var(--ar-w) / var(--ar-h)); /* 2/3 by default, 1/1 if .is-ar-square */
+    aspect-ratio: calc(
+      var(--ar-w) / var(--ar-h)
+    ); /* 2/3 by default, 1/1 if .is-ar-square */
     margin: 0;
     overflow: hidden;
   }
 
   /* images fill/crop inside the tile */
-  .two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image > img,
-  .two-image-gallery.wp-block-thirtyseven-two-image-gallery figure.wp-block-image > a > img{
+  .two-image-gallery.wp-block-thirtyseven-two-image-gallery
+    figure.wp-block-image
+    > img,
+  .two-image-gallery.wp-block-thirtyseven-two-image-gallery
+    figure.wp-block-image
+    > a
+    > img {
     width: 100% !important;
     height: 100% !important;
     object-fit: cover !important;
@@ -548,17 +666,18 @@ html, body { overscroll-behavior-y: contain; }
    ========================= */
 
 .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery {
-  --gallery-img-h: clamp(180px, 18vw, 360px);
+  --gallery-img-h: clamp(220px, 22vw, 420px);
 
   display: flex;
   flex-wrap: nowrap;
-  gap: 1.25rem;
+  gap: clamp(0.5rem, 1vw, 1rem);
   justify-content: center;
   align-items: center;
 
-  width: min(100%, 1400px);
+  width: 100%;
+  max-width: none;
   margin: 1.5rem auto;
-  overflow: hidden;
+  overflow: visible;
 }
 
 .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery figure.wp-block-image {
@@ -576,11 +695,18 @@ html, body { overscroll-behavior-y: contain; }
   display: block;
 }
 
+/* Larger desktop can breathe more */
+@media (min-width: 1440px) {
+  .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery {
+    --gallery-img-h: clamp(260px, 24vw, 520px);
+  }
+}
+
 /* Mobile: stack vertically, natural size */
 @media (max-width: 899px) {
   .multi-image-gallery.wp-block-thirtyseven-multi-image-gallery {
     flex-direction: column;
-    gap: .75rem;
+    gap: 0.75rem;
     width: 100%;
     max-width: none;
     overflow: visible;
