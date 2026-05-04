@@ -84,6 +84,12 @@
   font-weight: 400;
 }
 
+/* Last-line alignment option */
+.editor-styles-wrapper .wp-block[data-type="core/paragraph"].is-style-last-center,
+.editor-styles-wrapper p.wp-block-paragraph.is-style-last-center {
+  text-align-last: center !important;
+}
+
 /* Desktop readability test */
 @media (min-width: 900px) {
   .editor-styles-wrapper .wp-block[data-type="core/paragraph"] {
@@ -116,6 +122,12 @@
   .editor-styles-wrapper .wp-block[data-type="core/paragraph"].is-style-proj-text-w-small { width: 70%; max-width: 330px; }
   .editor-styles-wrapper .wp-block[data-type="core/paragraph"].is-style-proj-text-w-medium{ width: 72%; max-width: 350px; }
   .editor-styles-wrapper .wp-block[data-type="core/paragraph"].is-style-proj-text-w-large { width: 80%; max-width: 380px; }
+}
+
+/* Optional class: Advanced → Additional CSS class(es): last-center */
+.editor-styles-wrapper .wp-block[data-type="core/paragraph"].last-center,
+.editor-styles-wrapper p.wp-block-paragraph.last-center {
+  text-align-last: center !important;
 }
 
 /* ==========================================================

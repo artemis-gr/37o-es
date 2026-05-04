@@ -282,6 +282,9 @@ body {
     width: 100%;
     max-width: none;
   }
+  .project-content p.last-center {
+    text-align-last: center;
+  }
 }
 
 /* ==========================================================
