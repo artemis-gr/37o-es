@@ -40,6 +40,18 @@ body.single-project .site-footer {
   padding-bottom: 0;
   box-sizing: border-box;
 }
+
+/* Let iOS Safari use native page scrolling on project pages */
+body.single-project {
+  overflow-y: auto;
+}
+
+body.single-project #site-content,
+body.single-project main,
+body.single-project .project-page {
+  overflow: visible;
+}
+
 /* ==========================================================
    “Runway” so last blocks clear the fixed footer smoothly
    ========================================================== */
@@ -83,12 +95,6 @@ body.single-project .site-footer {
   }
 }
 
-/* Optional: tame “rubber band” interactions a bit */
-html,
-body {
-  overscroll-behavior-y: contain;
-}
-
 /* ==========================================================
    Hero: Title (left, sticky on desktop) + Meta (right)
    ========================================================== */
@@ -103,6 +109,7 @@ body {
   font-style: italic;
   margin: 0;
   letter-spacing: 0.4rem;
+  color: green;
 }
 
 .project-hero__title-pin {
@@ -720,5 +727,13 @@ body {
     width: 100% !important;
     height: auto !important;
     max-height: none;
+  }
+}
+
+/* Keep overscroll containment away from mobile Safari */
+@media (min-width: 900px) {
+  html,
+  body {
+    overscroll-behavior-y: contain;
   }
 }
