@@ -377,12 +377,20 @@ body.single-project .project-page {
 
 /* ===== Mobile / tablet: width-driven (feels natural) ===== */
 @media (max-width: 991.98px) {
+  .project-page .project-content .wp-block-image.is-style-proj-img-large,
+  .project-page .project-content .wp-block-image.is-style-proj-img-medium,
+  .project-page .project-content .wp-block-image.is-style-proj-img-small {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
   .project-page .project-content .wp-block-image.is-style-proj-img-large img,
   .project-page .project-content .wp-block-image.is-style-proj-img-medium img,
   .project-page .project-content .wp-block-image.is-style-proj-img-small img {
-    max-width: 100%;
-    height: auto;
-    width: 100%; /* fill column in mobile */
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    display: block;
   }
 }
 
